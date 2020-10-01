@@ -1,0 +1,21 @@
+.page {
+  cursor: pointer;
+  overflow: hidden;
+  padding: 1rem 2rem;
+  text-overflow: ellipsis;
+  transition: background .05s;
+  white-space: nowrap;
+
+  &:hover {
+    background: #dedede;
+  }
+}
+
+.activePage {
+  @extend .page;
+  background: #ccc;
+
+  &:hover {
+    background: #ccc;
+  }
+}
