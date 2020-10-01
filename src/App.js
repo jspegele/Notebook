@@ -1,12 +1,28 @@
 import React from 'react'
-import AuthRouter from './components/AuthRouter'
-import AuthContextProvider from './contexts/auth'
+import Login from './components/Login'
+import NoteBook from './components/NoteBook'
+import AuthContextProvider, { AuthContext } from './contexts/auth'
+import NotesContextProvider from './contexts/notes'
 
 function App() {
   return (
     <div className="App">
       <AuthContextProvider>
-        <AuthRouter />
+        <AuthContext.Consumer>{context => {
+          const { auth } = context
+
+          if (!!auth.uid) {
+            console.log('logged in')
+            return (
+              <NotesContextProvider>
+                <NoteBook />
+              </NotesContextProvider>
+            )
+          } else {
+            console.log('logged out')
+            return <Login />
+          }
+        }}</AuthContext.Consumer>
       </AuthContextProvider>
     </div>
   )
