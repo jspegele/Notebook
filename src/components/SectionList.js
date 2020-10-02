@@ -6,7 +6,7 @@ import SectionListItem from './SectionListItem'
 import styles from './style/SectionList.module.scss'
 
 const SectionList = () => {
-  const { notebook } = useContext(NotebookContext)
+  const { notebook, currentSection } = useContext(NotebookContext)
   return (
       <div className={styles.sections}>
         {notebook.sections.length > 0 && (
@@ -15,7 +15,7 @@ const SectionList = () => {
               key={section.id}
               id={section.id}
               title={section.title}
-              activeSection={notebook.currentSection === section.id ? true : false}
+              activeSection={currentSection.id === section.id ? true : false}
             />
           ))
         )}

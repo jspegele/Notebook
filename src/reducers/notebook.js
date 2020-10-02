@@ -2,13 +2,27 @@ import { v4 as uuid } from 'uuid'
 import { DateTime } from 'luxon'
 
 export const notesReducer = (state, action) => {
+  let notebooks = []
+  let sections = []
+  let pages = []
   switch (action.type) {
     case 'SET_NOTEBOOK':
       return action.payload.notebook
-    case 'ADD_NOTE':
+    case 'ADD_PAGE':
+      sections = []
+      state.sections.forEach(section => {
+        if (section.id === action.payload.page.section) {
+          sections.push({
+            ...section,
+            currentPage: action.payload.page.id
+          })
+        } else {
+          sections.push(section) 
+        }
+      })
       return {
         ...state,
-        currentPage: action.payload.page.id,
+        sections,
         pages: [
           ...state.pages,
           action.payload.page
@@ -23,19 +37,39 @@ export const notesReducer = (state, action) => {
         ]
       }
     case 'SET_CURRENT_PAGE':
+      sections = []
+      state.sections.forEach(section => {
+        if (section.id === action.payload.section) {
+          sections.push({
+            ...section,
+            currentPage: action.payload.page
+          })
+        } else {
+          sections.push(section) 
+        }
+      })
       return {
         ...state,
-        currentPage: action.payload.id
+        // currentPage: action.payload.page,
+        sections
       }
     case 'SET_CURRENT_SECTION':
+      notebooks = []
+      state.notebooks.forEach(notebook => {
+        if (notebook.id === action.payload.notebookId) {
+          notebooks.push({
+            ...notebook,
+            currentSection: action.payload.sectionId
+          })
+        }
+      })
       return {
         ...state,
-        currentSection: action.payload.id,
-        currentPage: action.payload.newPages[0].id,
+        notebooks,
         pages: action.payload.newPages
       }
     case 'EDIT_NOTE':
-      const pages = []
+      pages = []
       state.pages.map(page => {
         if (page.id === action.payload.id) {
           pages.push({
@@ -50,8 +84,17 @@ export const notesReducer = (state, action) => {
         ...state,
         pages
       }
-    case 'REMOVE_NOTE':
-      return state.filter(note => note.id !== action.payload.id)
+    case 'REMOVE_PAGE':
+      pages = []
+      state.pages.forEach(page => {
+        if (page.id !== action.payload.id) {
+          pages.push(page)
+        }
+      })
+      return {
+        ...state,
+        pages
+      }
     default:
       return state
   }

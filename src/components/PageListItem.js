@@ -5,15 +5,15 @@ import { NotebookContext } from '../contexts/notebook'
 
 import styles from './style/ListItem.module.scss'
 
-const PageListItem = ({ id, title, activePage }) => {
+const PageListItem = ({ id, title, currentSectionId, activePage }) => {
   const { auth } = useContext(AuthContext)
   const { dispatchNotebook } = useContext(NotebookContext)
   return (
     <div
       className={activePage ? styles.activeItem : styles.item}
-      onClick={() => startSetCurrentPage(auth.uid, id, dispatchNotebook)}
+      onClick={() => startSetCurrentPage(auth.uid, currentSectionId, id, dispatchNotebook)}
     >
-      {title}
+      {title || 'Untitled Note'}
     </div>
   )
 }

@@ -7,8 +7,73 @@ export const setNotebook = notebook => ({
   }
 })
 
+export const startSetNotebook = (uid, callback) => {
+  database.ref('users').once('value').then(snapshot => {
+    if (snapshot.hasChild(uid)) {
+      // Load Primary (first) Notebook into context
+      database.ref(`users/${uid}/`).once('value').then(snapshot => {
+        const data = snapshot.val()
+        
+        const currentNotebookId = data.currentNotebook || Object.keys(data.notebooks)[0]
+        const currentSectionId =  data.notebooks[currentNotebookId].currentSection || Object.keys(data.sections)[0]
+
+        // create object for notebook context
+        const notebookObj = {
+          currentNotebook: currentNotebookId,
+          notebooks: [],
+          sections: [],
+          pages: []
+        }
+
+        // add notebooks to object
+        database.ref(`users/${uid}/notebooks`).once('value').then(snapshot => {
+          snapshot.forEach(childSnapshot => {
+            notebookObj.notebooks.push({
+              id: childSnapshot.key,
+              ...childSnapshot.val()
+            })
+          })
+
+          // if section is in current notebook, add to object
+          database.ref(`users/${uid}/sections`).once('value').then(snapshot => {
+            snapshot.forEach(childSnapshot => {
+              if (childSnapshot.val().notebook === currentNotebookId) {
+                notebookObj.sections.push({
+                  id: childSnapshot.key,
+                  ...childSnapshot.val()
+                })
+              }
+            })
+  
+            // if page is in current section, add to object
+            database.ref(`users/${uid}/pages`).once('value').then(snapshot => {
+              snapshot.forEach(childSnapshot => {
+                if (childSnapshot.val().section === currentSectionId) {
+                  notebookObj.pages.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                  })
+                }
+              })
+  
+              callback(setNotebook(notebookObj))
+            })
+          })
+        })
+      })
+    } else {
+      // Create initial notebook for new user
+      database.ref(`users/${uid}/notebooks/`).push({ title: 'My Notebook', default: true }).then(snapshot => {
+        database.ref(`users/${uid}/sections/`).push({ title: 'Personal', notebook: snapshot.key }).then(snapshot => {
+          database.ref(`users/${uid}/pages/`).push({ title: 'Untitled Page', section: snapshot.key })
+        })
+      })
+    }
+  })
+}
+
 export const addPage = page => ({
-  type: 'ADD_NOTE',
+  type: 'ADD_PAGE',
   payload: {
     page
   }
@@ -24,6 +89,19 @@ export const startAddPage = (uid, sectionId, callback) => {
       body: ''
     }))
   })
+}
+
+export const setCurrentPage = (section, page) => ({
+  type: 'SET_CURRENT_PAGE',
+  payload: {
+    section,
+    page
+  }
+})
+
+export const startSetCurrentPage = (uid, section, page, callback) => {
+  database.ref(`users/${uid}/sections/${section}/currentPage`).set(page).then()
+  return callback(setCurrentPage(section, page))
 }
 
 export const addSection = section => ({
@@ -44,43 +122,31 @@ export const startAddSection = (uid, notebookId, callback) => {
   })
 }
 
-export const setCurrentPage = id => ({
-  type: 'SET_CURRENT_PAGE',
-  payload: {
-    id
-  }
-})
-
-export const startSetCurrentPage = (uid, id, callback) => {
-  database.ref(`users/${uid}/currentPage`).set(id).then()
-  return callback(setCurrentPage(id))
-}
-
-export const setCurrentSection = (id, newPages) => {
-  console.log(newPages)
+export const setCurrentSection = (notebookId, sectionId, newPages) => {
   return ({
     type: 'SET_CURRENT_SECTION',
     payload: {
-      id,
+      notebookId,
+      sectionId,
       newPages
     }
   })
 }
 
-export const startSetCurrentSection = (uid, id, callback) => {
-  // if page is in current section, add to new pages array
+export const startSetCurrentSection = (uid, notebookId, sectionId, callback) => {
+  // get pages for the newly selected section and add to new pages array
   const pages = []
   database.ref(`users/${uid}/pages`).once('value').then(snapshot => {
     snapshot.forEach(childSnapshot => {
-      if (childSnapshot.val().section === id) {
+      if (childSnapshot.val().section === sectionId) {
         pages.push({
           id: childSnapshot.key,
           ...childSnapshot.val()
         })
       }
     })
-    database.ref(`users/${uid}/currentSection`).set(id).then()
-    return callback(setCurrentSection(id, pages))
+    database.ref(`users/${uid}/notebooks/${notebookId}/currentSection`).set(sectionId)
+    return callback(setCurrentSection(notebookId, sectionId, pages))
   })
 
 }
@@ -98,9 +164,14 @@ export const startEditPage = (uid, id, updates, callback) => {
   callback(editPage(id, updates))
 }
 
-export const removePage = (id) => ({
-  type: 'REMOVE_NOTE',
+export const removePage = id => ({
+  type: 'REMOVE_PAGE',
   payload: {
     id
   }
 })
+
+export const startRemovePage = (uid, id, callback) => {
+  database.ref(`users/${uid}/pages/${id}`).remove()
+  callback(removePage(id))
+}
