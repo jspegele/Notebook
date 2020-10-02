@@ -1,4 +1,4 @@
-.page {
+.item {
   cursor: pointer;
   overflow: hidden;
   padding: 1rem 2rem;
@@ -11,8 +11,8 @@
   }
 }
 
-.activePage {
-  @extend .page;
+.activeItem {
+  @extend .item;
   background: #ccc;
 
   &:hover {

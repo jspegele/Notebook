@@ -17,8 +17,6 @@ function onAuthStateChange(callback) {
 
 const AuthContextProvider = props => {
   const [auth, dispatchAuth] = useReducer(authReducer, {})
-  // const [user, setUser] = useState({});
-  // console.log('user', user)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChange(dispatchAuth)
