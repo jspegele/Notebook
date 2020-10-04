@@ -14,7 +14,7 @@ const AddPage = () => {
       className={styles.add}
       onClick={() => startAddPage(auth.uid, currentSection.id, dispatchNotebook)}
     >
-      <FiPlus size="2.4rem"/> Add Note
+      <FiPlus size="2.4rem"/> Add Page
     </button>
   )
 }

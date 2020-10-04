@@ -9,18 +9,20 @@ const PageList = () => {
   const { notebook, currentSection, currentPage } = useContext(NotebookContext)
   if (notebook.currentNotebook) {
     return (
-      <div className={styles.pages}>
-        {notebook.pages.length > 0 && (
-          notebook.pages.map(page => (
-            <PageListItem
-              key={page.id}
-              id={page.id}
-              title={page.title}
-              currentSectionId={currentSection.id}
-              activePage={currentPage.id === page.id ? true : false}
-            />
-          ))
-        )}
+      <div className={styles.pageList}>
+        <div className={styles.pages}>
+          {notebook.pages.length > 0 && (
+            notebook.pages.map(page => (
+              <PageListItem
+                key={page.id}
+                id={page.id}
+                title={page.title}
+                currentSectionId={currentSection.id}
+                activePage={currentPage.id === page.id ? true : false}
+              />
+            ))
+          )}
+        </div>
         <AddPage />
       </div>
     )

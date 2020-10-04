@@ -29,20 +29,31 @@ export const notesReducer = (state, action) => {
         ]
       }
     case 'ADD_SECTION':
+      notebooks = []
+      state.notebooks.forEach(notebook => {
+        if (notebook.id === action.payload.notebookId) {
+          notebooks.push({
+            ...notebook,
+            currentSection: action.payload.section.id
+          })
+        }
+      })
       return {
         ...state,
+        notebooks,
         sections: [
           ...state.sections,
           action.payload.section
-        ]
+        ],
+        pages: action.payload.pages
       }
     case 'SET_CURRENT_PAGE':
       sections = []
       state.sections.forEach(section => {
-        if (section.id === action.payload.section) {
+        if (section.id === action.payload.sectionId) {
           sections.push({
             ...section,
-            currentPage: action.payload.page
+            currentPage: action.payload.pageId
           })
         } else {
           sections.push(section) 
@@ -50,7 +61,6 @@ export const notesReducer = (state, action) => {
       })
       return {
         ...state,
-        // currentPage: action.payload.page,
         sections
       }
     case 'SET_CURRENT_SECTION':

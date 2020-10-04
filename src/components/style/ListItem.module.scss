@@ -1,13 +1,34 @@
 .item {
+  align-items: center;
   cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
   overflow: hidden;
-  padding: 1rem 2rem;
+  padding: 1rem 1.2rem;
   text-overflow: ellipsis;
   transition: background .05s;
   white-space: nowrap;
 
   &:hover {
     background: #dedede;
+
+    .edit {
+      display: inline;
+    }
+  }
+
+  .edit {
+    background: none;
+    border: none;
+    color: #c2c2c2;
+    display: none;
+    outline: none;
+    padding: 0;
+
+    &:hover {
+      color: #a4a4a4;
+    }
   }
 }
 
@@ -17,5 +38,13 @@
 
   &:hover {
     background: #ccc;
+  }
+
+  .edit {
+    color: #a4a4a4;
+
+    &:hover {
+      color: #7a7a7a;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import database from '../firebase/firebase'
+import { DateTime } from 'luxon'
 
 export const setNotebook = notebook => ({
   type: 'SET_NOTEBOOK',
@@ -26,7 +27,7 @@ export const startSetNotebook = (uid, callback) => {
         }
 
         // add notebooks to object
-        database.ref(`users/${uid}/notebooks`).once('value').then(snapshot => {
+        database.ref(`users/${uid}/notebooks`).orderByChild('created').once('value').then(snapshot => {
           snapshot.forEach(childSnapshot => {
             notebookObj.notebooks.push({
               id: childSnapshot.key,
@@ -35,7 +36,7 @@ export const startSetNotebook = (uid, callback) => {
           })
 
           // if section is in current notebook, add to object
-          database.ref(`users/${uid}/sections`).once('value').then(snapshot => {
+          database.ref(`users/${uid}/sections`).orderByChild('created').once('value').then(snapshot => {
             snapshot.forEach(childSnapshot => {
               if (childSnapshot.val().notebook === currentNotebookId) {
                 notebookObj.sections.push({
@@ -46,7 +47,7 @@ export const startSetNotebook = (uid, callback) => {
             })
   
             // if page is in current section, add to object
-            database.ref(`users/${uid}/pages`).once('value').then(snapshot => {
+            database.ref(`users/${uid}/pages`).orderByChild('created').once('value').then(snapshot => {
               snapshot.forEach(childSnapshot => {
                 if (childSnapshot.val().section === currentSectionId) {
                   notebookObj.pages.push({
@@ -63,62 +64,49 @@ export const startSetNotebook = (uid, callback) => {
       })
     } else {
       // Create initial notebook for new user
-      database.ref(`users/${uid}/notebooks/`).push({ title: 'My Notebook', default: true }).then(snapshot => {
-        database.ref(`users/${uid}/sections/`).push({ title: 'Personal', notebook: snapshot.key }).then(snapshot => {
-          database.ref(`users/${uid}/pages/`).push({ title: 'Untitled Page', section: snapshot.key })
+      database.ref(`users/${uid}/notebooks/`).push({ title: 'My Notebook', created: DateTime.local() }).then(snapshot => {
+        database.ref(`users/${uid}/sections/`).push({ title: 'Personal', notebook: snapshot.key, created: DateTime.local() }).then(snapshot => {
+          database.ref(`users/${uid}/pages/`).push({ title: '', section: snapshot.key, created: DateTime.local(), updated: DateTime.local() })
         })
       })
     }
   })
 }
 
-export const addPage = page => ({
-  type: 'ADD_PAGE',
-  payload: {
-    page
-  }
-})
-
-export const startAddPage = (uid, sectionId, callback) => {
-  const title = 'Untitled Note'
-  return database.ref(`users/${uid}/pages/`).push({ section: sectionId, title, body: '' }).then(snapshot => {
-    callback(addPage({
-      id: snapshot.key,
-      section: sectionId,
-      title,
-      body: ''
-    }))
+export const addSection = (notebookId, section, pages) => {
+  return ({
+    type: 'ADD_SECTION',
+    payload: {
+      notebookId,
+      section,
+      pages
+    }
   })
 }
 
-export const setCurrentPage = (section, page) => ({
-  type: 'SET_CURRENT_PAGE',
-  payload: {
-    section,
-    page
+export const startAddSection = (uid, notebookId, title, callback) => {
+  const section = {
+    notebook: notebookId,
+    title,
+    created: DateTime.local().toString()
   }
-})
-
-export const startSetCurrentPage = (uid, section, page, callback) => {
-  database.ref(`users/${uid}/sections/${section}/currentPage`).set(page).then()
-  return callback(setCurrentPage(section, page))
-}
-
-export const addSection = section => ({
-  type: 'ADD_SECTION',
-  payload: {
-    section
-  }
-})
-
-export const startAddSection = (uid, notebookId, callback) => {
-  const title = 'Untitled Section'
-  return database.ref(`users/${uid}/sections/`).push({ notebook: notebookId, title }).then(snapshot => {
-    callback(addSection({
-      id: snapshot.key,
-      notebook: notebookId,
-      title
-    }))
+  return database.ref(`users/${uid}/sections/`).push(section).then(snapshot => {
+    const sectionId = snapshot.key
+    const page = {
+      section: sectionId,
+      title: '',
+      body: '',
+      created: DateTime.local().toString(),
+      updated: DateTime.local().toString()
+    }
+    database.ref(`users/${uid}/pages/`).push(page).then(snapshot => {
+      const pageId = snapshot.key
+      database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(pageId).then(snapshot => {
+        database.ref(`users/${uid}/notebooks/${notebookId}/currentSection`).set(sectionId)
+          callback(addSection(notebookId, { ...section, currentPage: pageId, id: sectionId }, [{ ...page, id: pageId}] ))
+          // callback(addSection(notebookId, { ...section, id: sectionId }, [page] ))
+      })
+    })
   })
 }
 
@@ -136,7 +124,7 @@ export const setCurrentSection = (notebookId, sectionId, newPages) => {
 export const startSetCurrentSection = (uid, notebookId, sectionId, callback) => {
   // get pages for the newly selected section and add to new pages array
   const pages = []
-  database.ref(`users/${uid}/pages`).once('value').then(snapshot => {
+  database.ref(`users/${uid}/pages`).orderByChild('created').once('value').then(snapshot => {
     snapshot.forEach(childSnapshot => {
       if (childSnapshot.val().section === sectionId) {
         pages.push({
@@ -148,7 +136,43 @@ export const startSetCurrentSection = (uid, notebookId, sectionId, callback) => 
     database.ref(`users/${uid}/notebooks/${notebookId}/currentSection`).set(sectionId)
     return callback(setCurrentSection(notebookId, sectionId, pages))
   })
+}
 
+export const addPage = page => ({
+  type: 'ADD_PAGE',
+  payload: {
+    page
+  }
+})
+
+export const startAddPage = (uid, sectionId, callback) => {
+  const page = {
+    section: sectionId,
+    title: '',
+    body: '',
+    created: DateTime.local().toString(),
+    updated: DateTime.local().toString()
+  }
+  return database.ref(`users/${uid}/pages/`).push(page).then(snapshot => {
+    database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(snapshot.key)
+    callback(addPage({
+      id: snapshot.key,
+      ...page
+    }))
+  })
+}
+
+export const setCurrentPage = (sectionId, pageId) => ({
+  type: 'SET_CURRENT_PAGE',
+  payload: {
+    sectionId,
+    pageId
+  }
+})
+
+export const startSetCurrentPage = (uid, sectionId, pageId, callback) => {
+  database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(pageId)
+  return callback(setCurrentPage(sectionId, pageId))
 }
 
 export const editPage = (id, updates) => ({
@@ -160,8 +184,12 @@ export const editPage = (id, updates) => ({
 })
 
 export const startEditPage = (uid, id, updates, callback) => {
-  database.ref(`users/${uid}/pages/${id}`).update(updates)
-  callback(editPage(id, updates))
+  const updatesWithDate = {
+    ...updates,
+    updated: DateTime.local().toString()
+  }
+  database.ref(`users/${uid}/pages/${id}`).update(updatesWithDate)
+  callback(editPage(id, updatesWithDate))
 }
 
 export const removePage = id => ({

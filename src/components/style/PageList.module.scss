@@ -1,5 +1,10 @@
-.pages {
+.pageList {
   display: flex;
   flex-direction: column;
   width: 19rem;
+}
+
+.pages {
+  flex-grow: 1;
+  overflow-y: auto;
 }

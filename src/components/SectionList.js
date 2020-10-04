@@ -8,6 +8,7 @@ import styles from './style/SectionList.module.scss'
 const SectionList = () => {
   const { notebook, currentSection } = useContext(NotebookContext)
   return (
+    <div className={styles.sectionList}>
       <div className={styles.sections}>
         {notebook.sections.length > 0 && (
           notebook.sections.map(section => (
@@ -19,8 +20,9 @@ const SectionList = () => {
             />
           ))
         )}
-        <AddSection />
       </div>
+      <AddSection />
+    </div>
   )
 }
  

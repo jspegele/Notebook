@@ -37,7 +37,7 @@
   }
 }
 
-.lastUpdated {
+.updated {
   align-items: center;
   display: flex;
   font-size: 1.2rem;
@@ -57,4 +57,32 @@
   resize: none;
   width: 100%;
   word-wrap: break-word;
+}
+
+.getStarted {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+
+  h2 {
+    font-size: 3.2rem;
+  }
+  p {
+    font-size: 2rem;
+    margin-top: 2rem;
+
+    button {
+      background: none;
+      border: none;
+      color: #6200ee;
+      cursor: pointer;
+      font-size: 2rem;
+
+      &:hover {
+        color: #3d00e0;
+      }
+    }
+  }
 }
