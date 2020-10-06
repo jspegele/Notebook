@@ -22,14 +22,12 @@ export const startSetSections = (uid, callback) => {
   })
 }
 
-export const addSection = section => {
-  return ({
-    type: 'ADD_SECTION',
-    payload: {
-      section
-    }
-  })
-}
+export const addSection = section => ({
+  type: 'ADD_SECTION',
+  payload: {
+    section
+  }
+})
 
 export const startAddSection = (uid, notebookId, title, callback) => {
   const section = {
@@ -40,6 +38,19 @@ export const startAddSection = (uid, notebookId, title, callback) => {
   return database.ref(`users/${uid}/sections/`).push(section).then(snapshot => {
     callback(addSection({ ...section, id: snapshot.key }))
   })
+}
+
+export const editSection = (id, updates) => ({
+  type: 'EDIT_SECTION',
+  payload: {
+    id,
+    updates
+  }
+})
+
+export const startEditSection = (uid, id, updates, callback) => {
+  database.ref(`users/${uid}/sections/${id}`).update(updates)
+  callback(editSection(id, updates))
 }
 
 export const setCurrentPage = (sectionId, pageId) => ({

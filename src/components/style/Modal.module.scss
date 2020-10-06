@@ -16,6 +16,20 @@
   padding: 3.2rem;
 }
 
+.modalWithClose {
+  @extend .modal;
+  padding-top: 1.2rem;
+}
+
+.close {
+  color: #a4a4a4;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: -2rem;
+  padding-bottom: 1rem;
+  width: 2.4rem;
+}
+
 .title {
   margin: 0 0 1.6rem 0;
 }
@@ -64,6 +78,15 @@ label {
   min-width: 25rem;
   outline: none;
   padding-bottom: .6rem;
+}
+
+.saveAction {
+  text-align: center;
+  width: 6rem;
+
+  svg {
+    margin: 0 auto;
+  }
 }
 
 .actions {
