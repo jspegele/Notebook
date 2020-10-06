@@ -1,20 +1,36 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { startAddSection } from '../actions/notebook'
+import { startSetCurrentSection } from '../actions/notebooks'
+import { startAddSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
-import { NotebookContext } from '../contexts/notebook'
+import { NotebooksContext } from '../contexts/notebooks'
+import { SectionsContext } from '../contexts/sections'
 import InputModal from './InputModal'
 
 import styles from './style/AddButton.module.scss'
 
 const AddSection = () => {
   const { auth } = useContext(AuthContext)
-  const { notebook, dispatchNotebook } = useContext(NotebookContext)
-  const [modalOpen, setModalOpen] = useState(false)
+  const { notebooks, dispatchNotebooks } = useContext(NotebooksContext)
+  const { sections, dispatchSections } = useContext(SectionsContext)
+  const currentNotebookId = notebooks[0].id  // UPDATE when additional notebeook functionality added
 
-  const handleSectionTitle = sectionTitle => {
-    startAddSection(auth.uid, notebook.currentNotebook, sectionTitle, dispatchNotebook)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [sectionAdded, setSectionAdded] = useState(false)
+
+  useEffect(() => {
+    if(sectionAdded) {
+      startSetCurrentSection(auth.uid, currentNotebookId, sections[sections.length - 1].id, dispatchNotebooks)
+      setSectionAdded(false)
+    }
+  }, [sectionAdded, auth, currentNotebookId, sections, dispatchNotebooks])
+
+  const handleModalInput = sectionTitle => {
+    handleAddSection(sectionTitle)
     handleCloseModal()
+  }
+  const handleAddSection = sectionTitle => {
+    startAddSection(auth.uid, currentNotebookId, sectionTitle, dispatchSections).then(() => { setSectionAdded(true) })
   }
   const handleCloseModal = () => {
     setModalOpen(false)
@@ -29,7 +45,7 @@ const AddSection = () => {
       </button>
       <InputModal
         modalOpen={modalOpen}
-        handleInput={handleSectionTitle}
+        handleInput={handleModalInput}
         handleCloseModal={handleCloseModal}
         messageTxt={'New section name:'}
         primaryBtnTxt={'Create Section'}

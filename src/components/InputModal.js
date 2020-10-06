@@ -36,7 +36,7 @@ const InputModal = ({
       <div className={styles.body}>
         <p>{messageTxt}</p>
         <form onSubmit={handleSubmit}>
-          <input type="text" value={input} onChange={e => setInput(e.target.value)} autoFocus />
+          <input className={styles.input} type="text" value={input} onChange={e => setInput(e.target.value)} autoFocus />
           <div className={styles.actions}>
             <button
               className={`${buttonStyles.button} ${buttonStyles.tertiary}`}

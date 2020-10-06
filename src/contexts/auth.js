@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState, useEffect } from 'react'
+import React, { createContext, useReducer, useEffect } from 'react'
 import { login, logout } from '../actions/auth'
 import { firebase } from '../firebase/firebase'
 import { authReducer } from '../reducers/auth'

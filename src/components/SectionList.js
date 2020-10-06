@@ -1,22 +1,22 @@
-import React, { useContext } from 'react'
-import { NotebookContext } from '../contexts/notebook'
+import React from 'react'
+import PropTypes from 'prop-types'
 import AddSection from './AddSection'
 import SectionListItem from './SectionListItem'
 
 import styles from './style/SectionList.module.scss'
 
-const SectionList = () => {
-  const { notebook, currentSection } = useContext(NotebookContext)
+const SectionList = ({ visibleSections, currentNotebookId, currentSectionId }) => {
   return (
     <div className={styles.sectionList}>
-      <div className={styles.sections}>
-        {notebook.sections.length > 0 && (
-          notebook.sections.map(section => (
+      <div className={styles.visibleSections}>
+        {visibleSections.length > 0 && (
+          visibleSections.map(section => (
             <SectionListItem
               key={section.id}
-              id={section.id}
+              sectionId={section.id}
               title={section.title}
-              activeSection={currentSection.id === section.id ? true : false}
+              currentNotebookId={currentNotebookId}
+              activeSection={currentSectionId === section.id ? true : false}
             />
           ))
         )}
@@ -24,6 +24,16 @@ const SectionList = () => {
       <AddSection />
     </div>
   )
+}
+
+SectionList.propTypes = {
+  visibleSections: PropTypes.array,
+  currentSectionId: PropTypes.string
+}
+
+SectionList.defaultProps = {
+  visibleSections: [],
+  currentSectionId: ''
 }
  
 export default SectionList

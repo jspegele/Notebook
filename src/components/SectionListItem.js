@@ -1,24 +1,35 @@
-import React, { useContext, useState } from 'react'
-import { FiEdit2 } from 'react-icons/fi'
-import { startSetCurrentSection } from '../actions/notebook'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
+import { startSetCurrentSection } from '../actions/notebooks'
 import { AuthContext } from '../contexts/auth'
-import { NotebookContext } from '../contexts/notebook'
+import { NotebooksContext } from '../contexts/notebooks'
 
 import styles from './style/ListItem.module.scss'
 
-const SectionListItem = ({ id, title, activeSection }) => {
+const SectionListItem = ({ sectionId, title, currentNotebookId, activeSection }) => {
   const { auth} = useContext(AuthContext)
-  const { notebook, dispatchNotebook } = useContext(NotebookContext)
-  const [trayOpen, setTrayOpen] = useState(false)
+  const { dispatchNotebooks } = useContext(NotebooksContext)
   return (
-    <div
-      className={activeSection ? styles.activeItem : styles.item}
-      onClick={() => startSetCurrentSection(auth.uid, notebook.currentNotebook, id, dispatchNotebook)}
-    >
-      {title || "Untitled Section"}
-      <button className={styles.edit} onClick={() => setTrayOpen(!trayOpen)}><FiEdit2 size="1.5rem" /></button>
+    <div className={activeSection ? styles.activeItemContainer : styles.itemContainer}>
+      <div
+        className={styles.item}
+        onClick={() => startSetCurrentSection(auth.uid, currentNotebookId, sectionId, dispatchNotebooks)}
+      >
+        {title || "Untitled Section"}
+      </div>
     </div>
   )
+}
+
+SectionListItem.propTypes = {
+  sectionId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  currentNotebookId: PropTypes.string.isRequired,
+  activeSection: PropTypes.bool
+}
+
+SectionListItem.defaultProps = {
+  activeSection: false
 }
  
 export default SectionListItem

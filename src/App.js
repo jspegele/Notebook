@@ -2,7 +2,9 @@ import React from 'react'
 import Login from './components/Login'
 import Notebook from './components/Notebook'
 import AuthContextProvider, { AuthContext } from './contexts/auth'
-import NotebookContextProvider from './contexts/notebook'
+import NotebooksContextProvider from './contexts/notebooks'
+import SectionsContextProvider from './contexts/sections'
+import PagesContextProvider from './contexts/pages'
 
 function App() {
   return (
@@ -14,9 +16,13 @@ function App() {
           if (!!auth.uid) {
             // AUTHENTICATED
             return (
-              <NotebookContextProvider>
-                <Notebook />
-              </NotebookContextProvider>
+              <NotebooksContextProvider>
+                <SectionsContextProvider>
+                  <PagesContextProvider>
+                    <Notebook />
+                  </PagesContextProvider>
+                </SectionsContextProvider>
+              </NotebooksContextProvider>
             )
           } else {
             // UNUTHENTICATED

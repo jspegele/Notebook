@@ -1,7 +1,11 @@
 import React, { useContext} from 'react'
-import { startSetNotebook } from '../actions/notebook'
+import { startSetNotebooks } from '../actions/notebooks'
+import { startSetSections } from '../actions/sections'
+import { startSetPages } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
-import { NotebookContext } from '../contexts/notebook'
+import { NotebooksContext } from '../contexts/notebooks'
+import { SectionsContext } from '../contexts/sections'
+import { PagesContext } from '../contexts/pages'
 import Page from './Page'
 import Sidebar from './Sidebar'
 
@@ -10,9 +14,17 @@ import styles from './style/Notebook.module.scss'
 
 const Notebook = () => {
   const { auth } = useContext(AuthContext)
-  const { notebook, dispatchNotebook } = useContext(NotebookContext)
+  const { notebooks, dispatchNotebooks } = useContext(NotebooksContext)
+  const { dispatchSections } = useContext(SectionsContext)
+  const { dispatchPages } = useContext(PagesContext)
 
-  if (!!notebook.currentNotebook) {
+  const setNotebook = () => {
+    startSetNotebooks(auth.uid, dispatchNotebooks)
+    startSetSections(auth.uid, dispatchSections)
+    startSetPages(auth.uid, dispatchPages)
+  }
+
+  if (!!notebooks.length) {
     return (
       <div className={styles.notebook}>
         <Sidebar />
@@ -20,7 +32,7 @@ const Notebook = () => {
       </div>
     )
   } else {
-    startSetNotebook(auth.uid, dispatchNotebook)
+    setNotebook()
     return (
       <div className={styles.loader}>
         <div className={styles.loadingImg}><img src={spinner} alt="loading..." /></div>

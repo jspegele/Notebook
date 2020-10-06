@@ -1,34 +1,45 @@
-import React, { useContext } from 'react'
-import { NotebookContext } from '../contexts/notebook'
+import React from 'react'
+import PropTypes from 'prop-types'
 import AddPage from './AddPage'
 import PageListItem from './PageListItem'
 
 import styles from './style/PageList.module.scss'
 
-const PageList = () => {
-  const { notebook, currentSection, currentPage } = useContext(NotebookContext)
-  if (notebook.currentNotebook) {
-    return (
-      <div className={styles.pageList}>
+const PageList = ({ visiblePages, currentSectionId, currentPageId, dispatchPages }) => {
+  return (
+    <div className={styles.pageList}>
+      {visiblePages.length ? (
         <div className={styles.pages}>
-          {notebook.pages.length > 0 && (
-            notebook.pages.map(page => (
+          {visiblePages.length > 0 && (
+            visiblePages.map(page => (
               <PageListItem
                 key={page.id}
-                id={page.id}
+                pageId={page.id}
                 title={page.title}
-                currentSectionId={currentSection.id}
-                activePage={currentPage.id === page.id ? true : false}
+                currentSectionId={currentSectionId}
+                activePage={currentPageId === page.id ? true : false}
               />
             ))
           )}
         </div>
-        <AddPage />
-      </div>
-    )
-  } else {
-    return <></>
-  }
+      ) : (
+        <></>
+      )}
+      <AddPage />
+    </div>
+  )
+}
+
+PageList.propTypes = {
+  currentSectionId: PropTypes.string,
+  currentPageId: PropTypes.string,
+  visiblePages: PropTypes.array
+}
+
+PageList.defaultProps = {
+  currentSectionId: '',
+  currentPageId: '',
+  visiblePages: []
 }
  
 export default PageList
