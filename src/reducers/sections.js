@@ -15,6 +15,8 @@ export const sectionsReducer = (state, action) => {
           return section
         }
       })
+    case 'REMOVE_SECTION':
+      return state.filter(section => section.id !== action.payload.id)
     case 'SET_CURRENT_PAGE':
       return state.map(section => {
         if (section.id === action.payload.sectionId) {

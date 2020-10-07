@@ -26,12 +26,12 @@
   cursor: pointer;
   margin-left: auto;
   margin-right: -2rem;
-  padding-bottom: 1rem;
   width: 2.4rem;
 }
 
 .title {
-  margin: 0 0 1.6rem 0;
+  font-size: 2.4rem;
+  margin: 0 0 3rem 0;
 }
 
 .body {
@@ -110,4 +110,8 @@ label {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1.2rem;
+}
+
+.warning {
+  color: #cc1d33;
 }

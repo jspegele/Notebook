@@ -53,6 +53,19 @@ export const startEditSection = (uid, id, updates, callback) => {
   callback(editSection(id, updates))
 }
 
+export const removeSection = id => ({
+  type: 'REMOVE_SECTION',
+  payload: {
+    id
+  }
+})
+
+export const startRemoveSection = (uid, id, callback) => {
+  console.log(id)
+  database.ref(`users/${uid}/sections/${id}`).remove()
+  callback(removeSection(id))
+}
+
 export const setCurrentPage = (sectionId, pageId) => ({
   type: 'SET_CURRENT_PAGE',
   payload: {

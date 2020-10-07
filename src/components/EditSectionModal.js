@@ -1,43 +1,60 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { FiX } from 'react-icons/fi'
 import Modal from 'react-modal'
+import { PagesContext } from '../contexts/pages'
 
 import styles from './style/Modal.module.scss'
 import buttonStyles from './style/Buttons.module.scss'
 import checkmarkStyles from './style/Checkmark.module.scss'
 
-const EditSectionModal = ({ modalOpen, handleCloseModal, handleTitle, title }) => {
+const EditSectionModal = ({ modalOpen, handleCloseModal, sectionId, sectionTitle, handleSave, handleDelete }) => {
+  const { pages } = useContext(PagesContext)
   const [newTitle, setNewTitle] = useState('')
   const [titleSaved, setTitleSaved] = useState(false)
+  const [showDeleteWarning, setShowDeleteWarning] = useState(false)
   useEffect(() => {
-    setNewTitle(title)
-  }, [title])
+    setNewTitle(sectionTitle)
+  }, [sectionTitle])
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    handleTitle(newTitle)
-    setTitleSaved(true)
+  const startCloseModal = () => {
+    setNewTitle('')
+    setTitleSaved(false)
+    setShowDeleteWarning(false)
+    handleCloseModal()
   }
-
   const handleText = e => {
     if (titleSaved === true) { setTitleSaved(false) }
     setNewTitle(e.target.value)
+  }
+  const startHandleSave = e => {
+    e.preventDefault()
+    handleSave(newTitle)
+    setTitleSaved(true)
+  }
+  const startHandleDelete = () => {
+    if (pages.filter(page => page.section === sectionId).length > 0) {
+      setShowDeleteWarning(true)
+    } else {
+      // ADD CONFIRMATION MODAL HERE
+      handleDelete()
+    }
   }
   return (
     <Modal
       appElement={document.getElementById('root')}
       isOpen={modalOpen}
-      onRequestClose={handleCloseModal}
+      onRequestClose={startCloseModal}
       contentLabel="Edit Section"
       closeTimeoutMS={200}
       className={styles.modalWithClose}
       overlayClassName={styles.overlay}
     >
-      <div className={styles.close} onClick={handleCloseModal}><FiX size="2.4rem" /></div>
+      <div className={styles.close} onClick={startCloseModal}><FiX size="2.4rem" /></div>
+      <h2 className={styles.title}>Manage Section</h2>
       <div className={styles.body}>
-        <form className={styles.titleForm} onSubmit={handleSubmit}>
-          <label htmlFor="titleInput">Rename section</label>
+        <form className={styles.titleForm} onSubmit={startHandleSave}>
+          <label htmlFor="titleInput">Rename</label>
           <input
             type="text"
             id="titleInput"
@@ -65,15 +82,20 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, handleTitle, title }) =
         <div className={styles.additionalOptions}>
         <label htmlFor="additionalOptions">Additional Options</label>
           <div id="additionalOptions" className={styles.deleteSection}>
-            <span>Delete this section</span>
-            <button
-              disabled
-              id="deleteSection"
-              className={`${buttonStyles.button} ${buttonStyles.destructive}`}
-              type="submit"
-            >
-              Delete
-            </button>
+            {showDeleteWarning ? (
+              <div className={styles.warning}>
+                Warning: This section contains note pages. You must move or delete all pages 
+                in this section before you can delete.
+              </div>
+            ) : (
+              <button
+                id="deleteSection"
+                className={`${buttonStyles.button} ${buttonStyles.destructive}`}
+                onClick={startHandleDelete}
+              >
+                Delete Section
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -84,7 +106,8 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, handleTitle, title }) =
 EditSectionModal.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
-  saveTitle: PropTypes.func.isRequired
+  handleSave: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }
 
 EditSectionModal.defaultProps = {}

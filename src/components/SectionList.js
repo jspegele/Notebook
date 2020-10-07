@@ -13,6 +13,7 @@ const SectionList = ({ visibleSections, currentNotebookId, currentSectionId }) =
           visibleSections.map(section => (
             <SectionListItem
               key={section.id}
+              visibleSections={visibleSections}
               sectionId={section.id}
               title={section.title}
               currentNotebookId={currentNotebookId}

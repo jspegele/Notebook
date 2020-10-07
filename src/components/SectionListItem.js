@@ -2,24 +2,33 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FiSettings } from 'react-icons/fi'
 import { startSetCurrentSection } from '../actions/notebooks'
+import { startEditSection, startRemoveSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { NotebooksContext } from '../contexts/notebooks'
 import { SectionsContext } from '../contexts/sections'
+import EditSectionModal from './EditSectionModal'
 
 import styles from './style/ListItem.module.scss'
-import EditSectionModal from './EditSectionModal'
-import { startEditSection } from '../actions/sections'
 
-const SectionListItem = ({ sectionId, title, currentNotebookId, activeSection }) => {
+const SectionListItem = ({ visibleSections, sectionId, title, currentNotebookId, activeSection }) => {
   const { auth } = useContext(AuthContext)
-  const { dispatchNotebooks } = useContext(NotebooksContext)
+  const { currentSectionId, dispatchNotebooks } = useContext(NotebooksContext)
   const { dispatchSections } = useContext(SectionsContext)
   const [modalOpen, setModalOpen] = useState(false)
   const handleCloseModal = () => {
     setModalOpen(false)
   }
-  const handleUpdateTitle = newTitle => {
+  const handleSave = newTitle => {
     startEditSection(auth.uid, sectionId, { title: newTitle }, dispatchSections)
+  }
+  const handleDelete = () => {
+    const currSectionIndex = visibleSections.findIndex(el => el.id === sectionId)
+    const newSectionIndex = currSectionIndex === 0 ? 1 : currSectionIndex - 1
+    const newSectionId = !!visibleSections[newSectionIndex] ? visibleSections[newSectionIndex].id : ''
+    if (currentSectionId === sectionId) {
+      startSetCurrentSection(auth.uid, currentNotebookId, newSectionId, dispatchNotebooks)
+    }
+    startRemoveSection(auth.uid, sectionId, dispatchSections)
   }
   return (
     <div className={activeSection ? styles.activeItemContainer : styles.itemContainer}>
@@ -38,8 +47,10 @@ const SectionListItem = ({ sectionId, title, currentNotebookId, activeSection })
       <EditSectionModal
         modalOpen={modalOpen}
         handleCloseModal={handleCloseModal}
-        handleTitle={handleUpdateTitle}
-        title={title}
+        sectionId={sectionId}
+        sectionTitle={title}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
       />
     </div>
   )
