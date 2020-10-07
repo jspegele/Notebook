@@ -4,18 +4,23 @@ import { FiCheckCircle, FiRotateCw, FiTrash2 } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startAddPage, startEditPage, startRemovePage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
-import { NotebooksContext } from '../contexts/notebooks'
+// import { NotebooksContext } from '../contexts/notebooks'
 import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
+import { FiltersContext } from '../contexts/filters'
 
 import styles from './style/Page.module.scss'
 import ConfirmationModal from './ConfirmationModal'
 
 const Page = () => {
   const { auth } = useContext(AuthContext)
-  const { currentSectionId } = useContext(NotebooksContext)
+  // const { currentSectionId } = useContext(NotebooksContext)
   const { dispatchSections } = useContext(SectionsContext)
-  const { pages, currentPage, dispatchPages } = useContext(PagesContext)
+  const { pages, dispatchPages } = useContext(PagesContext)
+  const { filters, updateFilters } = useContext(FiltersContext)
+  const currentSectionId = filters.section || null
+  const currentPageId = filters.page || (currentSectionId ? null : pages.length ? pages[0].id : null)
+  const currentPage = pages.filter(page => page.id === currentPageId)[0]
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
@@ -37,9 +42,13 @@ const Page = () => {
 
   useEffect(() => {
     if(pageAdded) {
-      startSetCurrentPage(auth.uid, currentSectionId, pages[pages.length - 1].id, dispatchSections)
+      const newPageId = pages[pages.length - 1].id
+      updateFilters({ page: newPageId })
+      startSetCurrentPage(auth.uid, currentSectionId, newPageId, dispatchSections)
+      setPageAdded(false)
+      
     }
-  }, [pageAdded, auth, currentSectionId, pages, dispatchSections])
+  }, [pageAdded, updateFilters, auth, currentSectionId, pages, dispatchSections])
 
   const updateTitle = e => {
     setTitle(e.target.value)
@@ -52,11 +61,16 @@ const Page = () => {
   }
 
   const deleteNote = () => {
-    const visiblePages = pages.filter(page => page.section === currentSectionId)
+    const visiblePages = currentSectionId ? (
+      pages.filter(page => page.section === currentSectionId)
+    ) : (
+      pages
+    )
     const currNoteIndex = visiblePages.findIndex(el => el.id === currentPage.id)
     const newNoteIndex = currNoteIndex === 0 ? 1 : currNoteIndex - 1
-    const newNoteId = !!visiblePages[newNoteIndex] ? visiblePages[newNoteIndex].id : ''
-    startSetCurrentPage(auth.uid, currentSectionId, newNoteId, dispatchSections)
+    const newPageId = !!visiblePages[newNoteIndex] ? visiblePages[newNoteIndex].id : ''
+    updateFilters({ page: newPageId })
+    startSetCurrentPage(auth.uid, currentSectionId, newPageId, dispatchSections)
     startRemovePage(auth.uid, currentPage.id, dispatchPages)
     handleCloseModal()
   }

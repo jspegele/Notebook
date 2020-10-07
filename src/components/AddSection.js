@@ -5,14 +5,16 @@ import { startAddSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { NotebooksContext } from '../contexts/notebooks'
 import { SectionsContext } from '../contexts/sections'
+import { FiltersContext } from '../contexts/filters'
 import InputModal from './InputModal'
 
-import styles from './style/AddButton.module.scss'
+import styles from './style/AddLink.module.scss'
 
 const AddSection = () => {
   const { auth } = useContext(AuthContext)
   const { notebooks, dispatchNotebooks } = useContext(NotebooksContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
+  const { updateFilters } = useContext(FiltersContext)
   const currentNotebookId = notebooks[0].id  // UPDATE when additional notebeook functionality added
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -20,10 +22,12 @@ const AddSection = () => {
 
   useEffect(() => {
     if(sectionAdded) {
-      startSetCurrentSection(auth.uid, currentNotebookId, sections[sections.length - 1].id, dispatchNotebooks)
+      const newSectionId = sections[sections.length - 1].id
+      updateFilters({ section: newSectionId, page: null })
+      startSetCurrentSection(auth.uid, currentNotebookId, newSectionId, dispatchNotebooks)
       setSectionAdded(false)
     }
-  }, [sectionAdded, auth, currentNotebookId, sections, dispatchNotebooks])
+  }, [sectionAdded, updateFilters, auth, currentNotebookId, sections, dispatchNotebooks])
 
   const handleModalInput = sectionTitle => {
     handleAddSection(sectionTitle)
@@ -41,7 +45,7 @@ const AddSection = () => {
         className={styles.add}
         onClick={() => setModalOpen(true)}
       >
-        <FiPlus size="2.4rem"/> Add Section
+        <FiPlus size="1.8rem"/> Add Section
       </button>
       <InputModal
         modalOpen={modalOpen}

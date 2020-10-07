@@ -1,5 +1,4 @@
 .sectionList {
-  border-right: 1px solid #999;
   display: flex;
   flex-direction: column;
   width: 19rem;
@@ -9,9 +8,6 @@
   flex-grow: 1;
   overflow-y: auto;
 }
-
-
-
 
 .section {
   cursor: pointer;

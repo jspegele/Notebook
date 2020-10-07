@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import AddPage from './AddPage'
 import PageListItem from './PageListItem'
+import { getVisiblePages } from '../selectors/pages'
 
 import styles from './style/PageList.module.scss'
 
-const PageList = ({ visiblePages, currentSectionId, currentPageId, dispatchPages }) => {
+const PageList = ({ pages, filters, currentSectionId, currentPageId, dispatchPages }) => {
+  const visiblePages = getVisiblePages(pages, filters)
   return (
     <div className={styles.pageList}>
       {visiblePages.length ? (

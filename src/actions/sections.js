@@ -61,8 +61,14 @@ export const removeSection = id => ({
 })
 
 export const startRemoveSection = (uid, id, callback) => {
-  console.log(id)
   database.ref(`users/${uid}/sections/${id}`).remove()
+  database.ref(`users/${uid}/pages/`).once('value').then(snapshot => {
+    snapshot.forEach(childSnapshot => {
+      if (childSnapshot.val().section === id) {
+        database.ref(`users/${uid}/pages/${childSnapshot.key}/section`).set(null)
+      }
+    })
+  })
   callback(removeSection(id))
 }
 
@@ -75,6 +81,8 @@ export const setCurrentPage = (sectionId, pageId) => ({
 })
 
 export const startSetCurrentPage = (uid, sectionId, pageId, callback) => {
-  database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(pageId)
-  callback(setCurrentPage(sectionId, pageId))
+  if (sectionId) {
+    database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(pageId)
+    callback(setCurrentPage(sectionId, pageId))
+  }
 }

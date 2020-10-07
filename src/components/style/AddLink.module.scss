@@ -2,22 +2,20 @@
   align-items: center;
   background: none;
   border: none;
-  border-top: 1px solid #999;
-  color: #6200ee;
+  color: #9965f4;
   cursor: pointer;
   display: flex;
   font-size: 1.4rem;
-  margin-top: auto;
   outline: none;
-  padding: 1.2rem 2rem;
+  padding: 1rem .8rem 1rem 1.2rem;
   text-align: left;
   width: 100%;
 
   &:hover {
-    background: #dedede;
+    color: #6002ee;
   }
 
   svg {
-    margin-right: 1.2rem;
+    margin-right: 1rem;
   }
 }

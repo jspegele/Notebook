@@ -12,7 +12,7 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, sectionId, sectionTitle
   const { pages } = useContext(PagesContext)
   const [newTitle, setNewTitle] = useState('')
   const [titleSaved, setTitleSaved] = useState(false)
-  const [showDeleteWarning, setShowDeleteWarning] = useState(false)
+
   useEffect(() => {
     setNewTitle(sectionTitle)
   }, [sectionTitle])
@@ -20,7 +20,6 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, sectionId, sectionTitle
   const startCloseModal = () => {
     setNewTitle('')
     setTitleSaved(false)
-    setShowDeleteWarning(false)
     handleCloseModal()
   }
   const handleText = e => {
@@ -33,12 +32,8 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, sectionId, sectionTitle
     setTitleSaved(true)
   }
   const startHandleDelete = () => {
-    if (pages.filter(page => page.section === sectionId).length > 0) {
-      setShowDeleteWarning(true)
-    } else {
-      // ADD CONFIRMATION MODAL HERE
-      handleDelete()
-    }
+    // ADD CONFIRMATION MODAL HERE -- warn that pages in this section will still show in "All Notes"
+    handleDelete()
   }
   return (
     <Modal
@@ -82,20 +77,13 @@ const EditSectionModal = ({ modalOpen, handleCloseModal, sectionId, sectionTitle
         <div className={styles.additionalOptions}>
         <label htmlFor="additionalOptions">Additional Options</label>
           <div id="additionalOptions" className={styles.deleteSection}>
-            {showDeleteWarning ? (
-              <div className={styles.warning}>
-                Warning: This section contains note pages. You must move or delete all pages 
-                in this section before you can delete.
-              </div>
-            ) : (
-              <button
-                id="deleteSection"
-                className={`${buttonStyles.button} ${buttonStyles.destructive}`}
-                onClick={startHandleDelete}
-              >
-                Delete Section
-              </button>
-            )}
+            <button
+              id="deleteSection"
+              className={`${buttonStyles.button} ${buttonStyles.destructive}`}
+              onClick={startHandleDelete}
+            >
+              Delete Section
+            </button>
           </div>
         </div>
       </div>

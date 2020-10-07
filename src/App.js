@@ -2,6 +2,7 @@ import React from 'react'
 import Login from './components/Login'
 import Notebook from './components/Notebook'
 import AuthContextProvider, { AuthContext } from './contexts/auth'
+import FiltersContextProvider from './contexts/filters'
 import NotebooksContextProvider from './contexts/notebooks'
 import SectionsContextProvider from './contexts/sections'
 import PagesContextProvider from './contexts/pages'
@@ -19,7 +20,9 @@ function App() {
               <NotebooksContextProvider>
                 <SectionsContextProvider>
                   <PagesContextProvider>
-                    <Notebook />
+                    <FiltersContextProvider>
+                      <Notebook />
+                     </FiltersContextProvider>
                   </PagesContextProvider>
                 </SectionsContextProvider>
               </NotebooksContextProvider>

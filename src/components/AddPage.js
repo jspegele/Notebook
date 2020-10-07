@@ -3,15 +3,18 @@ import { FiPlus } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startAddPage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
-import { NotebooksContext } from '../contexts/notebooks'
+import { FiltersContext } from '../contexts/filters'
+// import { NotebooksContext } from '../contexts/notebooks'
 import { PagesContext } from '../contexts/pages'
 import { SectionsContext } from '../contexts/sections'
 
-import styles from './style/AddButton.module.scss'
+import styles from './style/AddLink.module.scss'
 
 const AddPage = () => {
   const { auth } = useContext(AuthContext)
-  const { currentSectionId } = useContext(NotebooksContext)
+  const { filters, updateFilters } = useContext(FiltersContext)
+  const currentSectionId = filters.section || null
+  // const { currentSectionId } = useContext(NotebooksContext)
   const { dispatchSections } = useContext(SectionsContext)
   const { pages, dispatchPages } = useContext(PagesContext)
 
@@ -19,10 +22,12 @@ const AddPage = () => {
 
   useEffect(() => {
     if(pageAdded) {
-      startSetCurrentPage(auth.uid, currentSectionId, pages[pages.length - 1].id, dispatchSections)
+      const newPageId = pages[pages.length - 1].id
+      updateFilters({ page: newPageId })
+      startSetCurrentPage(auth.uid, currentSectionId, newPageId, dispatchSections)
       setPageAdded(false)
     }
-  }, [pageAdded, auth, currentSectionId, pages, dispatchSections])
+  }, [pageAdded, updateFilters, auth, currentSectionId, pages, dispatchSections])
 
   const handleAddPage = () => {
     startAddPage(auth.uid, currentSectionId, dispatchPages).then(() => { setPageAdded(true) })

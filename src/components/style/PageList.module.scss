@@ -1,10 +1,10 @@
 .pageList {
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
   width: 19rem;
-}
 
-.pages {
-  flex-grow: 1;
-  overflow-y: auto;
+  &:hover {
+    overflow-y: auto;
+  }
 }
