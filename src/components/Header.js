@@ -9,7 +9,7 @@ const Header = () => {
     <header className={styles.header}>
       <h1>
         <img className={styles.icon} src={notbookIcon} alt="Notebook" />
-        Justin's Notebook
+        My Notebook
       </h1>
       <button onClick={startLogout}>Logout</button>
     </header>

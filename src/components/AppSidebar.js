@@ -4,7 +4,7 @@ import SectionList from './SectionList'
 
 import styles from './style/AppSidebar.module.scss'
 
-const AppSidebar = ({ visibleSections, currentNotebookId, currentSectionId }) => {
+const AppSidebar = ({ visibleSections, currentSectionId }) => {
   const { updateFilters } = useContext(FiltersContext)
   return (
     <div className={styles.sidebar}>
@@ -19,7 +19,6 @@ const AppSidebar = ({ visibleSections, currentNotebookId, currentSectionId }) =>
       <div className={styles.sectionHeader}>Categories</div>
       <SectionList
         visibleSections={visibleSections}
-        currentNotebookId={currentNotebookId}
         currentSectionId={currentSectionId}
       />
     </div>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext, createRef } from 'react'
 import { DateTime } from 'luxon'
-import { FiCheckCircle, FiRotateCw, FiTrash2 } from 'react-icons/fi'
+import { FiCheckCircle, FiTrash2 } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startAddPage, startEditPage, startRemovePage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
-// import { NotebooksContext } from '../contexts/notebooks'
 import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
@@ -14,7 +13,6 @@ import ConfirmationModal from './ConfirmationModal'
 
 const Page = () => {
   const { auth } = useContext(AuthContext)
-  // const { currentSectionId } = useContext(NotebooksContext)
   const { dispatchSections } = useContext(SectionsContext)
   const { pages, dispatchPages } = useContext(PagesContext)
   const { filters, updateFilters } = useContext(FiltersContext)

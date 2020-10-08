@@ -29,9 +29,8 @@ export const addSection = section => ({
   }
 })
 
-export const startAddSection = (uid, notebookId, title, callback) => {
+export const startAddSection = (uid, title, callback) => {
   const section = {
-    notebook: notebookId,
     title,
     created: DateTime.local().toString()
   }

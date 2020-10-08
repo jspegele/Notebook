@@ -3,7 +3,6 @@ import Login from './components/Login'
 import Notebook from './components/Notebook'
 import AuthContextProvider, { AuthContext } from './contexts/auth'
 import FiltersContextProvider from './contexts/filters'
-import NotebooksContextProvider from './contexts/notebooks'
 import SectionsContextProvider from './contexts/sections'
 import PagesContextProvider from './contexts/pages'
 
@@ -17,15 +16,13 @@ function App() {
           if (!!auth.uid) {
             // AUTHENTICATED
             return (
-              <NotebooksContextProvider>
-                <SectionsContextProvider>
-                  <PagesContextProvider>
-                    <FiltersContextProvider>
-                      <Notebook />
-                     </FiltersContextProvider>
-                  </PagesContextProvider>
-                </SectionsContextProvider>
-              </NotebooksContextProvider>
+              <SectionsContextProvider>
+                <PagesContextProvider>
+                  <FiltersContextProvider>
+                    <Notebook />
+                    </FiltersContextProvider>
+                </PagesContextProvider>
+              </SectionsContextProvider>
             )
           } else {
             // UNUTHENTICATED

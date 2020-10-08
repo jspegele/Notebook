@@ -5,7 +5,7 @@ import SectionListItem from './SectionListItem'
 
 import styles from './style/SectionList.module.scss'
 
-const SectionList = ({ visibleSections, currentNotebookId, currentSectionId }) => {
+const SectionList = ({ visibleSections, currentSectionId }) => {
   return (
     <div className={styles.sectionList}>
       <div className={styles.visibleSections}>
@@ -16,7 +16,6 @@ const SectionList = ({ visibleSections, currentNotebookId, currentSectionId }) =
               visibleSections={visibleSections}
               sectionId={section.id}
               title={section.title}
-              currentNotebookId={currentNotebookId}
               activeSection={currentSectionId === section.id ? true : false}
             />
           ))

@@ -1,19 +1,16 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FiSettings } from 'react-icons/fi'
-import { startSetCurrentSection } from '../actions/notebooks'
 import { startEditSection, startRemoveSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { FiltersContext } from '../contexts/filters'
-import { NotebooksContext } from '../contexts/notebooks'
 import { SectionsContext } from '../contexts/sections'
 import EditSectionModal from './EditSectionModal'
 
 import styles from './style/ListItem.module.scss'
 
-const SectionListItem = ({ visibleSections, sectionId, title, currentNotebookId, activeSection }) => {
+const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) => {
   const { auth } = useContext(AuthContext)
-  const { dispatchNotebooks } = useContext(NotebooksContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const currentSectionId = filters.section || null
@@ -33,7 +30,6 @@ const SectionListItem = ({ visibleSections, sectionId, title, currentNotebookId,
         section: newSectionId,
         page: sections.filter(section => section.id === newSectionId)[0].currentPage
       })
-      startSetCurrentSection(auth.uid, currentNotebookId, newSectionId, dispatchNotebooks)
     }
     startRemoveSection(auth.uid, sectionId, dispatchSections)
   }
@@ -41,7 +37,6 @@ const SectionListItem = ({ visibleSections, sectionId, title, currentNotebookId,
     <div className={activeSection ? styles.activeItemContainer : styles.itemContainer}>
       <div
         className={styles.item}
-        // onClick={() => startSetCurrentSection(auth.uid, currentNotebookId, sectionId, dispatchNotebooks)}
         onClick={() => updateFilters({
           section: sectionId,
           page: sections.filter(section => section.id === sectionId)[0].currentPage
@@ -70,7 +65,6 @@ const SectionListItem = ({ visibleSections, sectionId, title, currentNotebookId,
 SectionListItem.propTypes = {
   sectionId: PropTypes.string.isRequired,
   title: PropTypes.string,
-  currentNotebookId: PropTypes.string.isRequired,
   activeSection: PropTypes.bool
 }
 

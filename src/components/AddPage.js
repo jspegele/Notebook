@@ -4,7 +4,6 @@ import { startSetCurrentPage } from '../actions/sections'
 import { startAddPage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
 import { FiltersContext } from '../contexts/filters'
-// import { NotebooksContext } from '../contexts/notebooks'
 import { PagesContext } from '../contexts/pages'
 import { SectionsContext } from '../contexts/sections'
 
@@ -14,7 +13,6 @@ const AddPage = () => {
   const { auth } = useContext(AuthContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const currentSectionId = filters.section || null
-  // const { currentSectionId } = useContext(NotebooksContext)
   const { dispatchSections } = useContext(SectionsContext)
   const { pages, dispatchPages } = useContext(PagesContext)
 
