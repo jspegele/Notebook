@@ -85,8 +85,7 @@ export const assignSection = (id, sectionId) => ({
 })
 
 export const startAssignSection = (uid, id, sectionId, callback) => {
-  console.log(sectionId)
-  database.ref(`users/${uid}/pages/${id}/section`).set('test')
+  database.ref(`users/${uid}/pages/${id}/section`).set(sectionId)
   callback(assignSection(id, sectionId))
 }
 

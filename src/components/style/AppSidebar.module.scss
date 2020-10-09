@@ -2,7 +2,12 @@
   border-right: 1px solid #999;
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
   width: 20rem;
+  
+  &:hover {
+    overflow-y: auto;
+  }
 }
 
 .sectionHeader {

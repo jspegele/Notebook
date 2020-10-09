@@ -1,7 +1,6 @@
 .item {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   transition: background .05s;
 
   &:hover {
@@ -16,6 +15,11 @@
   &:hover {
     background: #ccc;
   }
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
@@ -42,5 +46,29 @@
     font-size: 1.4rem;
     outline: none;
     width: 100%;
+  }
+}
+
+.menu {
+  color: #a4a4a4;
+  cursor: pointer;
+  margin: 1rem 1rem 0 0;
+  transition: opacity .1s;
+  width: 16px;
+}
+
+.noPadBtm {
+  padding-bottom: 0;
+}
+
+.category {
+  align-items: center;
+  color: #a4a4a4;
+  display: flex;
+  font-size: 1.2rem;
+  padding: .3rem .8rem 1rem 3.2rem;
+
+  svg {
+    margin: 0 .6rem .1rem 0;
   }
 }

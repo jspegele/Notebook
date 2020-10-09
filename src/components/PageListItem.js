@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { FiStar } from 'react-icons/fi'
+import { FiStar, FiFolder, FiFile } from 'react-icons/fi'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startRemovePage, startRestoreTrash, startSetFavorite, startRemoveSection, startSetTrash, startAssignSection } from '../actions/pages'
@@ -105,28 +105,46 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
         onMouseEnter={() => setShowDropdownBtn(true)}
         onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
-        <div
-          className={styles.title}
-          onClick={() => handleSetPage(pageId)}
-        >
-          <div className={styles.icon}>
-            {favorite && <FiStar size="1.2rem" />}
+        <div className={styles.titleContainer}>
+          <div
+            className={`${styles.title} ${styles.noPadBtm}`}
+            onClick={() => handleSetPage(pageId)}
+          >
+            <div className={styles.icon}>
+              {favorite && <FiStar size="1.2rem" />}
+            </div>
+            <div className={styles.text}>
+              {title || 'Untitled Note'}
+            </div>
           </div>
-          <div className={styles.text}>
-            {title || 'Untitled Note'}
-          </div>
-        </div>
-        <div className={dropdownStyles.dropdown}>
           {showDropdownBtn && (
             <div
-              className={dropdownStyles.dropdownBtn}
+              className={styles.menu}
               onClick={() => setShowDropdown(true)}
             >
-              <FiMoreHorizontal size="1.6rem" />
+              <FiMoreHorizontal style={{ width: '1.6rem'}} />
             </div>
           )}
         </div>
+        <div className={styles.category}>
+          {sectionId ? (
+            <>
+              {sections.filter(section => section.id === sectionId).length ? (
+                <>
+                  <FiFolder size="1.2rem" />
+                  {sections.filter(section => section.id === sectionId)[0].title}
+                </>
+              ) : ''}
+            </>
+          ) : (
+            <>
+              <FiFile size="1.2rem" />
+              Notes
+            </>
+          )}
+        </div>
       </div>
+      {/* Dropdown */}
       <div 
         className={showDropdown ? (
           `${dropdownStyles.content} ${dropdownStyles.showDropdown}`

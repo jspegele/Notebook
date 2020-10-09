@@ -103,42 +103,43 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
         onMouseEnter={() => setShowDropdownBtn(true)}
         onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
-        <div
-          className={styles.title}
-          onClick={handleSetSection}
-        >
-          {editableTitle ? (
-            <form onSubmit={handleSave}>
-              <input
-                type="text"
-                ref={inputRef} 
-                value={titleInput}
-                onChange={e => setTitleInput(e.target.value)}
-                autoFocus
-              />
-            </form>
-          ) : (
-            <>
-              <div className={styles.icon}>
-                <FiFolder size="1.2rem" />
-              </div>
-              <div className={styles.text}>
-                {title || "Untitled Category"}
-              </div>
-            </>
-          )}
-        </div>
-        <div className={dropdownStyles.dropdown}>
+        <div className={styles.titleContainer}>
+          <div
+            className={styles.title}
+            onClick={handleSetSection}
+          >
+            {editableTitle ? (
+              <form onSubmit={handleSave}>
+                <input
+                  type="text"
+                  ref={inputRef} 
+                  value={titleInput}
+                  onChange={e => setTitleInput(e.target.value)}
+                  autoFocus
+                />
+              </form>
+            ) : (
+              <>
+                <div className={styles.icon}>
+                  <FiFolder size="1.2rem" />
+                </div>
+                <div className={styles.text}>
+                  {title || "Untitled Category"}
+                </div>
+              </>
+            )}
+          </div>
           {showDropdownBtn && (
             <div
-              className={dropdownStyles.dropdownBtn}
+              className={styles.menu}
               onClick={() => setShowDropdown(true)}
             >
-              <FiMoreHorizontal size="1.6rem" />
+              <FiMoreHorizontal style={{ width: '1.6rem'}} />
             </div>
           )}
         </div>
       </div>
+      {/* Dropdown */}
       <div 
         className={showDropdown ? (
           `${dropdownStyles.content} ${dropdownStyles.showDropdown}`
