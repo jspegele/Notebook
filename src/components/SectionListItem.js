@@ -1,26 +1,78 @@
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { FiSettings } from 'react-icons/fi'
+import { FiMoreHorizontal, FiFolder } from 'react-icons/fi'
 import { startEditSection, startRemoveSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { FiltersContext } from '../contexts/filters'
 import { SectionsContext } from '../contexts/sections'
-import EditSectionModal from './EditSectionModal'
 
 import styles from './style/ListItem.module.scss'
+import dropdownStyles from './style/Dropdown.module.scss'
 
 const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) => {
   const { auth } = useContext(AuthContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
   const { filters, updateFilters } = useContext(FiltersContext)
+  const [showDropdownBtn, setShowDropdownBtn] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
+  const [editableTitle, setEditableTitle] = useState(false)
+  const [titleInput, setTitleInput] = useState(title || 'Untitled Category')
   const currentSectionId = filters.section || null
-  const [modalOpen, setModalOpen] = useState(false)
-  const handleCloseModal = () => {
-    setModalOpen(false)
+  const dropdownWrapperRef = useRef(null)
+  const inputRef = useRef(null)
+
+  const handleContextMenu = e => {
+    e.preventDefault()
+    setShowDropdown(true)
   }
-  const handleSave = newTitle => {
-    startEditSection(auth.uid, sectionId, { title: newTitle }, dispatchSections)
+
+  // Close dropdown if user clicks outside of it
+  useEffect(() => {
+    if (showDropdown) {
+      function handleClickOutside(event) {
+        if (dropdownWrapperRef.current && !dropdownWrapperRef.current.contains(event.target)) {
+          setShowDropdownBtn(false)
+          setShowDropdown(false)
+        }
+      }
+
+      document.addEventListener("mousedown", handleClickOutside)
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside)
+      }
+    }
+  }, [dropdownWrapperRef, showDropdown])
+
+  const handleEditTitle = () => {
+    setShowDropdownBtn(false)
+    setShowDropdown(false)
+    setEditableTitle(true)
   }
+
+  // Save new title if user clicks outside of input field
+  useEffect(() => {
+    if (editableTitle) {
+      function handleClickOutside(event) {
+        if (inputRef.current && !inputRef.current.contains(event.target)) {
+          setEditableTitle(false)
+          startEditSection(auth.uid, sectionId, { title: titleInput }, dispatchSections)
+        }
+      }
+
+      document.addEventListener("mousedown", handleClickOutside)
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside)
+      }
+    }
+  }, [inputRef, editableTitle, auth, sectionId, title, titleInput, dispatchSections])
+
+  // Save new title if user submits form
+  const handleSave = e => {
+    e.preventDefault()
+    setEditableTitle(false)
+    startEditSection(auth.uid, sectionId, { title: titleInput }, dispatchSections)
+  }
+
   const handleDelete = () => {
     const currSectionIndex = visibleSections.findIndex(el => el.id === sectionId)
     const newSectionIndex = currSectionIndex === 0 ? 1 : currSectionIndex - 1
@@ -28,37 +80,87 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
     if (currentSectionId === sectionId) {
       updateFilters({
         section: newSectionId,
-        page: sections.filter(section => section.id === newSectionId)[0].currentPage
+        page: sections.filter(section => section.id === newSectionId)[0].currentPage,
+        group: 'all'
       })
     }
     startRemoveSection(auth.uid, sectionId, dispatchSections)
   }
+
+  const handleSetSection = () => {
+    updateFilters({
+      section: sectionId,
+      page: sections.filter(section => section.id === sectionId)[0].currentPage,
+      group: 'all'
+    })
+  }
+
   return (
-    <div className={activeSection ? styles.activeItemContainer : styles.itemContainer}>
+    <>
       <div
-        className={styles.item}
-        onClick={() => updateFilters({
-          section: sectionId,
-          page: sections.filter(section => section.id === sectionId)[0].currentPage
-        })}
+        className={activeSection ? styles.activeItem : styles.item}
+        onContextMenu={handleContextMenu}
+        onMouseEnter={() => setShowDropdownBtn(true)}
+        onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
-        {title || "Untitled Section"}
+        <div
+          className={styles.title}
+          onClick={handleSetSection}
+        >
+          {editableTitle ? (
+            <form onSubmit={handleSave}>
+              <input
+                type="text"
+                ref={inputRef} 
+                value={titleInput}
+                onChange={e => setTitleInput(e.target.value)}
+                autoFocus
+              />
+            </form>
+          ) : (
+            <>
+              <div className={styles.icon}>
+                <FiFolder size="1.2rem" />
+              </div>
+              <div className={styles.text}>
+                {title || "Untitled Category"}
+              </div>
+            </>
+          )}
+        </div>
+        <div className={dropdownStyles.dropdown}>
+          {showDropdownBtn && (
+            <div
+              className={dropdownStyles.dropdownBtn}
+              onClick={() => setShowDropdown(true)}
+            >
+              <FiMoreHorizontal size="1.6rem" />
+            </div>
+          )}
+        </div>
       </div>
-      <div
-        className={styles.edit}
-        onClick={() => setModalOpen(true)}
+      <div 
+        className={showDropdown ? (
+          `${dropdownStyles.content} ${dropdownStyles.showDropdown}`
+        ) : (
+          dropdownStyles.content
+        )}
+        ref={dropdownWrapperRef} 
       >
-        <FiSettings size="1.6rem" />
+        <div
+          className={dropdownStyles.link}
+          onClick={handleEditTitle}
+        >
+          Rename Category
+        </div>
+        <div
+          className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
+          onClick={handleDelete}
+        >
+          Delete Permanently
+        </div>
       </div>
-      <EditSectionModal
-        modalOpen={modalOpen}
-        handleCloseModal={handleCloseModal}
-        sectionId={sectionId}
-        sectionTitle={title}
-        handleSave={handleSave}
-        handleDelete={handleDelete}
-      />
-    </div>
+    </>
   )
 }
 

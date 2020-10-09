@@ -19,7 +19,7 @@ const AddSection = () => {
   useEffect(() => {
     if(sectionAdded) {
       const newSectionId = sections[sections.length - 1].id
-      updateFilters({ section: newSectionId, page: null })
+      updateFilters({ section: newSectionId, page: null, group: null })
       setSectionAdded(false)
     }
   }, [sectionAdded, updateFilters, sections])
@@ -40,7 +40,7 @@ const AddSection = () => {
         className={styles.add}
         onClick={() => setModalOpen(true)}
       >
-        <FiPlus size="1.8rem"/> Add Section
+        <FiPlus size="1.8rem"/> Add Category
       </button>
       <InputModal
         modalOpen={modalOpen}

@@ -35,7 +35,7 @@ const AddPage = () => {
       className={styles.add}
       onClick={handleAddPage}
     >
-      <FiPlus size="2.4rem"/> Add Page
+      <FiPlus size="1.8rem"/> Add Note
     </button>
   )
 }

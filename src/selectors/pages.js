@@ -1,11 +1,12 @@
-export const getVisiblePages = (pages, { section }) => {
+export const getVisiblePages = (pages, { group, section }) => {
   return pages.filter(page => {
-    if (section) {
-      return page.section === section
-    } else {
-      return page
-    }
-    
+    const groupMatch = group === 'all' ? !page.trash : (
+      group === 'favorites' ? page.favorite : (
+        group === 'trash' ? page.trash : false
+      )
+    )
+    const sectionMatch = section ? page.section === section : true
+    return groupMatch && sectionMatch
   })
 }
 

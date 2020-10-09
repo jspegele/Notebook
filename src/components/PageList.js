@@ -18,6 +18,8 @@ const PageList = ({ pages, filters, currentSectionId, currentPageId, dispatchPag
                 key={page.id}
                 pageId={page.id}
                 title={page.title}
+                sectionId={page.section}
+                favorite={page.favorite}
                 currentSectionId={currentSectionId}
                 activePage={currentPageId === page.id ? true : false}
               />

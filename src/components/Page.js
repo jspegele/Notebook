@@ -17,7 +17,7 @@ const Page = () => {
   const { pages, dispatchPages } = useContext(PagesContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const currentSectionId = filters.section || null
-  const currentPageId = filters.page || (currentSectionId ? null : pages.length ? pages[0].id : null)
+  const currentPageId = filters.page || ((filters.group === 'all' && pages.length) ? pages[0].id : null)
   const currentPage = pages.filter(page => page.id === currentPageId)[0]
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
@@ -88,15 +88,6 @@ const Page = () => {
               onChange={updateTitle}
               ref={titleInput}
             />
-            <button className={styles.delete} onClick={() => setModalOpen(true)}><FiTrash2 size="3.2rem"/></button>
-            <ConfirmationModal
-              modalOpen={modalOpen}
-              handleAction={deleteNote}
-              handleCloseModal={handleCloseModal}
-              messageTxt={`Are you sure you want to delete this notes page? All of your ${currentPage.title} notes will be deleted and not recoverable.`}
-              primaryBtnTxt={'Delete Page'}
-              destructive={true}
-            />
           </div>
           <div className={styles.updated}>
             <FiCheckCircle size="1.4rem" title="Page Saved to Cloud" />
@@ -110,14 +101,12 @@ const Page = () => {
         </>
       ) : (
         <div className={styles.getStarted}>
-          <h2>There aren't any pages in this section.</h2>
           <p>
             <button
               onClick={() => startAddPage(auth.uid, currentSectionId, dispatchPages).then(() => { setPageAdded(true) })}
             >
-              + Add a page
+              + Create a Note
             </button>
-            to start taking notes.
           </p>
         </div>
       )}

@@ -38,7 +38,7 @@ export const startAddPage = (uid, sectionId, callback) => {
     updated: DateTime.local().toString()
   }
   return database.ref(`users/${uid}/pages/`).push(page).then(snapshot => {
-    database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(snapshot.key)
+    if (sectionId) database.ref(`users/${uid}/sections/${sectionId}/currentPage`).set(snapshot.key)
     callback(addPage({
       id: snapshot.key,
       ...page
@@ -61,6 +61,69 @@ export const startEditPage = (uid, id, updates, callback) => {
   }
   database.ref(`users/${uid}/pages/${id}`).update(updatesWithDate)
   callback(editPage(id, updatesWithDate))
+}
+
+export const setFavorite = (id, status) => ({
+  type: 'SET_FAVORITE',
+  payload: {
+    id,
+    status
+  }
+})
+
+export const startSetFavorite = (uid, id, status, callback) => {
+  database.ref(`users/${uid}/pages/${id}/favorite`).set(status)
+  callback(setFavorite(id, status))
+}
+
+export const assignSection = (id, sectionId) => ({
+  type: 'ASSIGN_SECTION',
+  payload: {
+    id,
+    sectionId
+  }
+})
+
+export const startAssignSection = (uid, id, sectionId, callback) => {
+  console.log(sectionId)
+  database.ref(`users/${uid}/pages/${id}/section`).set('test')
+  callback(assignSection(id, sectionId))
+}
+
+export const removeSection = id => ({
+  type: 'REMOVE_SECTION',
+  payload: {
+    id
+  }
+})
+
+export const startRemoveSection = (uid, id, callback) => {
+  database.ref(`users/${uid}/pages/${id}/section`).set('')
+  callback(removeSection(id))
+}
+
+export const setTrash = id => ({
+  type: 'SET_TRASH',
+  payload: {
+    id
+  }
+})
+
+export const startSetTrash = (uid, id, callback) => {
+  database.ref(`users/${uid}/pages/${id}/trash`).set(true)
+  callback(setTrash(id))
+}
+
+export const restoreTrash = id => ({
+  type: 'RESTORE_TRASH',
+  payload: {
+    id
+  }
+})
+
+export const startRestoreTrash = (uid, id, callback) => {
+  database.ref(`users/${uid}/pages/${id}/trash`).remove()
+  callback(restoreTrash(id))
 }
 
 export const removePage = id => ({
