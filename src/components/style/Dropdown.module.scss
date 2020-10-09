@@ -10,11 +10,17 @@
 }
 
 .link {
+  align-items: center;
   cursor: pointer;
-  display: block;
+  display: flex;
   padding: 1.2rem 2.4rem;
   text-decoration: none;
   transition: background-color .1s;
+
+  svg {
+    color: #a4a4a4;
+    margin-right: 1rem;
+  }
 
   &:hover { background-color: #e5e5e5; }
 }

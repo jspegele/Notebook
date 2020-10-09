@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { FiMoreHorizontal, FiFolder } from 'react-icons/fi'
+import { FiMoreHorizontal, FiFolder, FiEdit2, FiX } from 'react-icons/fi'
 import { startEditSection, startRemoveSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { FiltersContext } from '../contexts/filters'
@@ -146,19 +146,20 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
         ) : (
           dropdownStyles.content
         )}
+        style={{ marginLeft: '1rem' }}
         ref={dropdownWrapperRef} 
       >
         <div
           className={dropdownStyles.link}
           onClick={handleEditTitle}
         >
-          Rename Category
+          <FiEdit2 size="1.8rem" />Rename Category
         </div>
         <div
           className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
           onClick={handleDelete}
         >
-          Delete Permanently
+          <FiX size="1.8rem" />Delete Permanently
         </div>
       </div>
     </>

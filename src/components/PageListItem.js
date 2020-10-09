@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { FiStar, FiFolder, FiFile } from 'react-icons/fi'
+import { FiStar, FiFolder, FiFile, FiEdit2, FiX, FiTrash, FiArrowUp } from 'react-icons/fi'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startRemovePage, startRestoreTrash, startSetFavorite, startRemoveSection, startSetTrash, startAssignSection } from '../actions/pages'
@@ -151,7 +151,8 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
         ) : (
           dropdownStyles.content
         )}
-        ref={dropdownWrapperRef} 
+        style={{ marginLeft: '1rem' }}
+        ref={dropdownWrapperRef}
       >
         {/* Manage section */}
         <div className={dropdownStyles.item}>
@@ -185,7 +186,7 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
             className={dropdownStyles.link}
             onClick={handleRemoveSection}
           >
-            Remove from category
+            <FiX size="1.8rem" />Remove from category
           </div>
         )}
         {/* Toggle favorite */}
@@ -193,6 +194,7 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
           className={dropdownStyles.link}
           onClick={handleFavorite}
         >
+          <FiStar size="1.8rem" />
           {favorite ? 'Remove Favorite' : 'Mark as Favorite'}
         </div>
         {/* Trash options */}
@@ -203,14 +205,14 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
               className={dropdownStyles.link}
               onClick={handleRestore}
             >
-              Restore from trash
+              <FiArrowUp size="1.8rem" />Restore from trash
             </div>
             {/* Delete */}
             <div
               className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
               onClick={handlePermanentlyDelete}
             >
-              Permanently delete
+              <FiX size="1.8rem" />Permanently delete
               {/* <ConfirmationModal
                 modalOpen={modalOpen}
                 handleAction={deleteNote}
@@ -227,7 +229,7 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
             className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
             onClick={handleTrash}
           >
-            Move to trash
+            <FiTrash size="1.8rem" />Move to trash
           </div>
         )}
       </div>
