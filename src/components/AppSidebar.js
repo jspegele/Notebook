@@ -15,9 +15,9 @@ const AppSidebar = ({ visibleSections, currentSectionId }) => {
   return (
     <div className={styles.sidebar}>
       <div
-        className={(filters.group === 'all' && !currentSectionId) ? itemStyles.activeItem : itemStyles.item}
+        className={(filters.tab === 'all' && !currentSectionId) ? itemStyles.activeItem : itemStyles.item}
         onClick={() => updateFilters({
-          group: 'all',
+          tab: 'all',
           section: null,
           page: pages[0].id
         })}
@@ -28,9 +28,9 @@ const AppSidebar = ({ visibleSections, currentSectionId }) => {
         </div>
       </div>
       <div
-        className={filters.group === 'favorites' ? itemStyles.activeItem : itemStyles.item}
+        className={filters.tab === 'favorites' ? itemStyles.activeItem : itemStyles.item}
         onClick={() => updateFilters({
-          group: 'favorites',
+          tab: 'favorites',
           section: null,
           page: favorites.length ? favorites[0].id : null
         })}
@@ -41,9 +41,9 @@ const AppSidebar = ({ visibleSections, currentSectionId }) => {
         </div>
       </div>
       <div
-        className={filters.group === 'trash' ? itemStyles.activeItem : itemStyles.item}
+        className={filters.tab === 'trash' ? itemStyles.activeItem : itemStyles.item}
         onClick={() => updateFilters({
-          group: 'trash',
+          tab: 'trash',
           section: null,
           page: trash.length ? trash[0].id : null
         })}

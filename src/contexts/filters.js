@@ -4,7 +4,7 @@ export const FiltersContext = createContext()
 
 const FiltersContextProvider = props => {
   const [filters, setFilters] = useState({
-    group: 'all',
+    tab: 'all',
     section: null,
     page: null
   })

@@ -57,7 +57,7 @@ const AddSection = () => {
   useEffect(() => {
     if(sectionAdded) {
       const newSectionId = sections[sections.length - 1].id
-      updateFilters({ section: newSectionId, page: null, group: null })
+      updateFilters({ tab: 'categories', section: newSectionId, page: null })
       setSectionAdded(false)
     }
   }, [sectionAdded, updateFilters, sections])

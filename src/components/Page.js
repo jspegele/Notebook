@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext, createRef } from 'react'
 import { DateTime } from 'luxon'
-import { FiCheckCircle, FiTrash2 } from 'react-icons/fi'
+import { FiCheckCircle } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
-import { startAddPage, startEditPage, startRemovePage } from '../actions/pages'
+import { startAddPage, startEditPage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
 import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
 
 import styles from './style/Page.module.scss'
-import ConfirmationModal from './ConfirmationModal'
 
 const Page = () => {
   const { auth } = useContext(AuthContext)
@@ -17,11 +16,10 @@ const Page = () => {
   const { pages, dispatchPages } = useContext(PagesContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const currentSectionId = filters.section || null
-  const currentPageId = filters.page || ((filters.group === 'all' && pages.length) ? pages[0].id : null)
+  const currentPageId = filters.page || ((filters.tab === 'all' && pages.length) ? pages[0].id : null)
   const currentPage = pages.filter(page => page.id === currentPageId)[0]
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
-  const [modalOpen, setModalOpen] = useState(false)
   const [pageAdded, setPageAdded] = useState(false)
   const titleInput = createRef()
 
@@ -56,25 +54,6 @@ const Page = () => {
   const updateBody = e => {
     setBody(e.target.value)
     startEditPage(auth.uid, currentPage.id, { body: e.target.value }, dispatchPages)
-  }
-
-  const deleteNote = () => {
-    const visiblePages = currentSectionId ? (
-      pages.filter(page => page.section === currentSectionId)
-    ) : (
-      pages
-    )
-    const currNoteIndex = visiblePages.findIndex(el => el.id === currentPage.id)
-    const newNoteIndex = currNoteIndex === 0 ? 1 : currNoteIndex - 1
-    const newPageId = !!visiblePages[newNoteIndex] ? visiblePages[newNoteIndex].id : ''
-    updateFilters({ page: newPageId })
-    startSetCurrentPage(auth.uid, currentSectionId, newPageId, dispatchSections)
-    startRemovePage(auth.uid, currentPage.id, dispatchPages)
-    handleCloseModal()
-  }
-
-  const handleCloseModal = () => {
-    setModalOpen(false)
   }
   return (
     <section className={styles.notePage}>

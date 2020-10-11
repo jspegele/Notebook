@@ -80,8 +80,7 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
     if (currentSectionId === sectionId) {
       updateFilters({
         section: newSectionId,
-        page: sections.filter(section => section.id === newSectionId)[0].currentPage,
-        group: 'all'
+        page: sections.filter(section => section.id === newSectionId)[0].currentPage
       })
     }
     startRemoveSection(auth.uid, sectionId, dispatchSections)
@@ -91,7 +90,7 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
     updateFilters({
       section: sectionId,
       page: sections.filter(section => section.id === sectionId)[0].currentPage,
-      group: 'all'
+      tab: 'categories'
     })
   }
 

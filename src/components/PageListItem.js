@@ -193,7 +193,7 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
           {favorite ? 'Remove Favorite' : 'Mark as Favorite'}
         </div>
         {/* Trash options */}
-        {filters.group === 'trash' ? (
+        {filters.tab === 'trash' ? (
           <>
             {/* Restore */}
             <div
