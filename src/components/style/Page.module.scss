@@ -48,15 +48,22 @@
   }
 }
 
-.notes {
+textarea.notes {
   border:none;
   flex-grow: 1;
   font-size: 1.6rem;
   margin-top: 2rem;
   outline: none;
+  overflow: hidden;
+  padding-right: 2rem;
   resize: none;
   width: 100%;
   word-wrap: break-word;
+
+  &:hover, &:focus {
+    overflow-y: auto;
+    padding-right: 0;
+  }
 }
 
 .getStarted {

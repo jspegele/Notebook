@@ -22,7 +22,6 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
   const [showDropdown, setShowDropdown] = useState(false)
   const [sectionSelect, setSectionSelect] = useState('default')
   const dropdownWrapperRef = useRef(null)
-  const inputRef = useRef(null)
 
   const handleContextMenu = e => {
     e.preventDefault()
@@ -45,10 +44,6 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
       }
     }
   }, [dropdownWrapperRef, showDropdown])
-
-  const handleEditTitle = () => {
-
-  }
 
   const handleSetSection = e => {
     setShowDropdownBtn(false)

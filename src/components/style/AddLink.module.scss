@@ -19,3 +19,24 @@
     margin-right: 1rem;
   }
 }
+
+.addForm {
+  padding: 1rem .8rem;
+  
+  input {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1.6rem;
+    max-width: 16rem;
+    outline: none;
+    padding: .4rem .2rem;
+    width: 100%;
+  }
+}
+
+.error {
+  color: #b00020;
+  display: block;
+  font-size: 1.3rem;
+  padding: 1rem .8rem;
+}
