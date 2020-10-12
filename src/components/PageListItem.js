@@ -49,21 +49,44 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
     setShowDropdownBtn(false)
     setShowDropdown(false)
     setSectionSelect(e.target.value)
+
+    // UPDATE FILTERS IF REMOVING FROM SELECTED SECTION
+    const pagesInSection = pages.filter(page => page.section === sectionId)
+    const currentSection = sections.find(section => section.id === sectionId)
+    if (filters.section === sectionId) {
+      if (pagesInSection.length === 1) {
+        updateFilters({ page: null })
+      } else if (currentSection.currentPage === pageId) {
+        const newCurrentPage = pagesInSection[0].id === pageId ? pagesInSection[1].id : pagesInSection[0].id
+        updateFilters({ page: newCurrentPage })
+      }
+    }
+    
     const newSection = sections.find(section => section.id === e.target.value)
     if (!newSection.currentPage) startSetCurrentPage(auth.uid, newSection.id, pageId, dispatchSections)
     startAssignSection(auth.uid, pageId, e.target.value, dispatchPages)
+  }
+
+  const handleRemoveSection = () => {
+    setShowDropdownBtn(false)
+    setShowDropdown(false)
+    const pagesInSection = pages.filter(page => page.section === sectionId)
+    const currentSection = sections.find(section => section.id === sectionId)
+    if (pagesInSection.length === 1) {
+      if (filters.section === sectionId) updateFilters({ page: null })
+      startSetCurrentPage(auth.uid, sectionId, null, dispatchSections)
+    } else if (currentSection.currentPage === pageId) {
+      const newCurrentPage = pagesInSection[0].id === pageId ? pagesInSection[1].id : pagesInSection[0].id
+      if (filters.section === sectionId) updateFilters({ page: newCurrentPage })
+      startSetCurrentPage(auth.uid, sectionId, newCurrentPage, dispatchSections)
+    }
+    startRemoveSection(auth.uid, pageId, dispatchPages)
   }
 
   const handleFavorite = () => {
     setShowDropdownBtn(false)
     setShowDropdown(false)
     startSetFavorite(auth.uid, pageId, !favorite, dispatchPages)
-  }
-
-  const handleRemoveSection = () => {
-    setShowDropdownBtn(false)
-    setShowDropdown(false)
-    startRemoveSection(auth.uid, pageId, dispatchPages)
   }
 
   const handleTrash = () => {
