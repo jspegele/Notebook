@@ -74,13 +74,21 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
   }
 
   const handleDelete = () => {
-    const currSectionIndex = visibleSections.findIndex(el => el.id === sectionId)
-    const newSectionIndex = currSectionIndex === 0 ? 1 : currSectionIndex - 1
-    const newSectionId = !!visibleSections[newSectionIndex] ? visibleSections[newSectionIndex].id : ''
-    if (currentSectionId === sectionId) {
+    if (visibleSections.length > 1) {
+      const currSectionIndex = visibleSections.findIndex(el => el.id === sectionId)
+      const newSectionIndex = currSectionIndex === 0 ? 1 : currSectionIndex - 1
+      const newSectionId = !!visibleSections[newSectionIndex] ? visibleSections[newSectionIndex].id : ''
+      if (currentSectionId === sectionId) {
+        updateFilters({
+          section: newSectionId,
+          page: sections.filter(section => section.id === newSectionId)[0].currentPage
+        })
+      }
+    } else {
       updateFilters({
-        section: newSectionId,
-        page: sections.filter(section => section.id === newSectionId)[0].currentPage
+        tab: 'all',
+        section: null,
+        page: null
       })
     }
     startRemoveSection(auth.uid, sectionId, dispatchSections)

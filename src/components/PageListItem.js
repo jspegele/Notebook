@@ -49,6 +49,13 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
     setShowDropdownBtn(false)
     setShowDropdown(false)
     setSectionSelect(e.target.value)
+    sections.forEach(section => {
+      if (section.id === e.target.value) {
+        if (!section.currentPage) {
+          startSetCurrentPage(auth.uid, section.id, pageId, dispatchSections)
+        }
+      }
+    })
     startAssignSection(auth.uid, pageId, e.target.value, dispatchPages)
   }
 
