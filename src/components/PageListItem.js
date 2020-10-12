@@ -125,44 +125,44 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
         onMouseEnter={() => setShowDropdownBtn(true)}
         onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
-        <div className={styles.titleContainer}>
-          <div
-            className={`${styles.title} ${styles.noPadBtm}`}
-            onClick={() => handleSetPage(pageId)}
-          >
+        <div
+          onClick={() => handleSetPage(pageId)}
+          className={styles.titleContainer}
+        >
+          <div className={`${styles.title} ${styles.noPadBtm}`}>
             <div className={styles.icon}>
               {favorite && <FiStar size="1.2rem" />}
             </div>
-            <div className={styles.text}>
+            <div className={`${styles.text} ${styles.textWide}`}>
               {title || 'Untitled Note'}
             </div>
           </div>
-          {showDropdownBtn && (
-            <div
-              className={styles.menu}
-              onClick={() => setShowDropdown(true)}
-            >
-              <FiMoreHorizontal style={{ width: '1.6rem'}} />
-            </div>
-          )}
+          <div className={styles.category}>
+            {sectionId ? (
+              <>
+                {sections.filter(section => section.id === sectionId).length ? (
+                  <>
+                    <FiFolder size="1.2rem" />
+                    {sections.filter(section => section.id === sectionId)[0].title}
+                  </>
+                ) : ''}
+              </>
+            ) : (
+              <>
+                <FiFile size="1.2rem" />
+                Notes
+              </>
+            )}
+          </div>
         </div>
-        <div className={styles.category}>
-          {sectionId ? (
-            <>
-              {sections.filter(section => section.id === sectionId).length ? (
-                <>
-                  <FiFolder size="1.2rem" />
-                  {sections.filter(section => section.id === sectionId)[0].title}
-                </>
-              ) : ''}
-            </>
-          ) : (
-            <>
-              <FiFile size="1.2rem" />
-              Notes
-            </>
-          )}
-        </div>
+        {showDropdownBtn && (
+          <div
+            className={styles.menu}
+            onClick={() => setShowDropdown(true)}
+          >
+            <FiMoreHorizontal style={{ width: '1.6rem'}} />
+          </div>
+        )}
       </div>
       {/* Dropdown */}
       <div 

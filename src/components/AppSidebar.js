@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { FiFile, FiStar, FiTrash } from 'react-icons/fi'
+import { FiFile, FiStar, FiLayers, FiTrash } from 'react-icons/fi'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
 import SectionList from './SectionList'
@@ -38,6 +38,19 @@ const AppSidebar = ({ visibleSections, currentSectionId }) => {
         <div className={itemStyles.title}>
           <div className={itemStyles.icon}><FiStar size="1.2rem" /></div>
           <div className={itemStyles.text}>Favorites</div>
+        </div>
+      </div>
+      <div
+        className={filters.tab === 'uncategorized' ? itemStyles.activeItem : itemStyles.item}
+        onClick={() => updateFilters({
+          tab: 'uncategorized',
+          section: null,
+          page: favorites.length ? favorites[0].id : null
+        })}
+      >
+        <div className={itemStyles.title}>
+          <div className={itemStyles.icon}><FiLayers size="1.2rem" /></div>
+          <div className={itemStyles.text}>Uncategorized</div>
         </div>
       </div>
       <div

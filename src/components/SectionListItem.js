@@ -136,15 +136,15 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
               </>
             )}
           </div>
-          {showDropdownBtn && (
-            <div
-              className={styles.menu}
-              onClick={() => setShowDropdown(true)}
-            >
-              <FiMoreHorizontal style={{ width: '1.6rem'}} />
-            </div>
-          )}
         </div>
+        {showDropdownBtn && (
+          <div
+            className={styles.menu}
+            onClick={() => setShowDropdown(true)}
+          >
+            <FiMoreHorizontal style={{ width: '1.6rem'}} />
+          </div>
+        )}
       </div>
       {/* Dropdown */}
       <div 

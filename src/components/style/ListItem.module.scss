@@ -1,6 +1,6 @@
 .item {
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
   transition: background .05s;
 
   &:hover {
@@ -19,25 +19,34 @@
 
 .titleContainer {
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   justify-content: space-between;
 }
 
 .title {
   align-items: center;
-  cursor: pointer;
   display: flex;
   flex-grow: 1;
   flex-shrink: 0;
   font-size: 1.4rem;
-  overflow: hidden;
   padding: 1rem .8rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 
   .icon {
     color: #a4a4a4;
     display: flex;
     flex: 0 0 24px;
+  }
+
+  .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 13rem;
+  }
+
+  .textWide {
+    width: 20rem;
   }
 
   input {
@@ -52,6 +61,7 @@
 .menu {
   color: #a4a4a4;
   cursor: pointer;
+  display: flex;
   margin: 1rem 1rem 0 0;
   transition: opacity .1s;
   width: 16px;
