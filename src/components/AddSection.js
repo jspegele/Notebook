@@ -25,7 +25,7 @@ const AddSection = () => {
       setError('Category already exists.')
     } else {
       setShowTitleInput(false)
-      startAddSection(auth.uid, titleInput, dispatchSections).then(
+      startAddSection(auth.uid, titleInput.trim(), dispatchSections).then(
         () => { setSectionAdded(true) }
       )
       setTitleInput('')

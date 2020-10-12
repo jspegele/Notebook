@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createRef } from 'react'
 import { DateTime } from 'luxon'
-import { FiCheckCircle } from 'react-icons/fi'
+import { FiSave } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startAddPage, startEditPage } from '../actions/pages'
 import { AuthContext } from '../contexts/auth'
@@ -21,6 +21,7 @@ const Page = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [pageAdded, setPageAdded] = useState(false)
+  const [saving, setSaving] = useState(false)
   const titleInput = createRef()
 
   useEffect(() => {
@@ -46,12 +47,21 @@ const Page = () => {
     }
   }, [pageAdded, updateFilters, auth, currentSectionId, pages, dispatchSections])
 
+  // when pages changes, stop saving icon
+  useEffect(() => {
+    setTimeout(() => {
+      setSaving(false)
+    }, 1000)
+  }, [title, body])
+
   const updateTitle = e => {
+    setSaving(true)
     setTitle(e.target.value)
     startEditPage(auth.uid, currentPage.id, { title: e.target.value }, dispatchPages)
   }
 
   const updateBody = e => {
+    setSaving(true)
     setBody(e.target.value)
     startEditPage(auth.uid, currentPage.id, { body: e.target.value }, dispatchPages)
   }
@@ -69,7 +79,7 @@ const Page = () => {
             />
           </div>
           <div className={styles.updated}>
-            <FiCheckCircle size="1.4rem" title="Page Saved to Cloud" />
+            <FiSave size="1.4rem" title="Page Saved to Cloud" />
             Last Saved: {DateTime.fromISO(currentPage.updated).toFormat('cccc, d LLLL y    hh:mm a')}
           </div>
           <textarea

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react'
+import React, { useEffect, useContext, useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { FiMoreHorizontal, FiFolder, FiEdit2, FiX } from 'react-icons/fi'
 import { startEditSection, startRemoveSection } from '../actions/sections'
@@ -49,13 +49,18 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
     setEditableTitle(true)
   }
 
+  const saveSection = useCallback(() => {
+    setEditableTitle(false)
+    setTitleInput(titleInput.trim())
+    startEditSection(auth.uid, sectionId, { title: titleInput.trim() }, dispatchSections)
+  }, [auth, sectionId, titleInput, dispatchSections])
+
   // Save new title if user clicks outside of input field
   useEffect(() => {
     if (editableTitle) {
       function handleClickOutside(event) {
         if (inputRef.current && !inputRef.current.contains(event.target)) {
-          setEditableTitle(false)
-          startEditSection(auth.uid, sectionId, { title: titleInput }, dispatchSections)
+          saveSection()
         }
       }
 
@@ -64,13 +69,12 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
           document.removeEventListener("mousedown", handleClickOutside)
       }
     }
-  }, [inputRef, editableTitle, auth, sectionId, title, titleInput, dispatchSections])
+  }, [inputRef, editableTitle, saveSection])
 
   // Save new title if user submits form
   const handleSave = e => {
     e.preventDefault()
-    setEditableTitle(false)
-    startEditSection(auth.uid, sectionId, { title: titleInput }, dispatchSections)
+    saveSection()
   }
 
   const handleDelete = () => {
