@@ -20,9 +20,11 @@ const AppNav = ({ currentSectionId }) => {
           page: pages[0].id
         })}
       >
-        <div className={itemStyles.title}>
-          <div className={itemStyles.icon}><FiFile size="1.2rem" /></div>
-          <div className={itemStyles.text}>All Notes</div>
+        <div className={itemStyles.titleContainer}>
+          <div className={itemStyles.title}>
+            <div className={itemStyles.icon}><FiFile size="1.2rem" /></div>
+            <div className={itemStyles.text}>All Notes</div>
+          </div>
         </div>
       </div>
       <div
@@ -33,9 +35,11 @@ const AppNav = ({ currentSectionId }) => {
           page: favorites.length ? favorites[0].id : null
         })}
       >
-        <div className={itemStyles.title}>
-          <div className={itemStyles.icon}><FiStar size="1.2rem" /></div>
-          <div className={itemStyles.text}>Favorites</div>
+        <div className={itemStyles.titleContainer}>
+          <div className={itemStyles.title}>
+            <div className={itemStyles.icon}><FiStar size="1.2rem" /></div>
+            <div className={itemStyles.text}>Favorites</div>
+          </div>
         </div>
       </div>
       <div
@@ -46,9 +50,11 @@ const AppNav = ({ currentSectionId }) => {
           page: favorites.length ? favorites[0].id : null
         })}
       >
-        <div className={itemStyles.title}>
-          <div className={itemStyles.icon}><FiLayers size="1.2rem" /></div>
-          <div className={itemStyles.text}>Uncategorized</div>
+        <div className={itemStyles.titleContainer}>
+          <div className={itemStyles.title}>
+            <div className={itemStyles.icon}><FiLayers size="1.2rem" /></div>
+            <div className={itemStyles.text}>Uncategorized</div>
+          </div>
         </div>
       </div>
       <div
@@ -59,9 +65,11 @@ const AppNav = ({ currentSectionId }) => {
           page: trash.length ? trash[0].id : null
         })}
       >
-        <div className={itemStyles.title}>
-          <div className={itemStyles.icon}><FiTrash size="1.2rem" /></div>
-          <div className={itemStyles.text}>Trash</div>
+        <div className={itemStyles.titleContainer}>
+          <div className={itemStyles.title}>
+            <div className={itemStyles.icon}><FiTrash size="1.2rem" /></div>
+            <div className={itemStyles.text}>Trash</div>
+          </div>
         </div>
       </div>
     </div>

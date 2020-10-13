@@ -120,16 +120,16 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
   return (
     <>
       <div
-        className={activePage ? styles.activeItem : styles.item}
+        className={`${activePage ? styles.activeItem : styles.item} ${styles.borderbtm}`}
         onContextMenu={handleContextMenu}
         onMouseEnter={() => setShowDropdownBtn(true)}
         onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
         <div
           onClick={() => handleSetPage(pageId)}
-          className={styles.titleContainer}
+          className={filters.tab !== 'categories' ? styles.titleContainer : `${styles.titleContainer} ${styles.xlpad}`}
         >
-          <div className={`${styles.title} ${styles.noPadBtm}`}>
+          <div className={styles.title}>
             <div className={styles.icon}>
               {favorite && <FiStar size="1.2rem" />}
             </div>
@@ -137,23 +137,25 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
               {title || 'Untitled Note'}
             </div>
           </div>
-          <div className={styles.category}>
-            {sectionId ? (
-              <>
-                {sections.filter(section => section.id === sectionId).length ? (
-                  <>
-                    <FiFolder size="1.2rem" />
-                    {sections.filter(section => section.id === sectionId)[0].title}
-                  </>
-                ) : ''}
-              </>
-            ) : (
-              <>
-                <FiFile size="1.2rem" />
-                Notes
-              </>
-            )}
-          </div>
+          {filters.tab !== 'categories' && (
+            <div className={styles.category}>
+              {sectionId ? (
+                <>
+                  {sections.filter(section => section.id === sectionId).length ? (
+                    <>
+                      <FiFolder size="1.2rem" />
+                      {sections.filter(section => section.id === sectionId)[0].title}
+                    </>
+                  ) : ''}
+                </>
+              ) : (
+                <>
+                  <FiFile size="1.2rem" />
+                  Notes
+                </>
+              )}
+            </div>
+          )}
         </div>
         {showDropdownBtn && (
           <div

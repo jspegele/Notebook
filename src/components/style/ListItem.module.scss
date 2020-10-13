@@ -17,11 +17,21 @@
   }
 }
 
+.borderbtm {
+  border-bottom: 1px solid #e5e5e5;
+}
+
 .titleContainer {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
+  padding: 1rem .8rem;
+}
+
+.xlpad {
+  padding-bottom: 1.6rem;
+  padding-top: 1.6rem;
 }
 
 .title {
@@ -30,7 +40,6 @@
   flex-grow: 1;
   flex-shrink: 0;
   font-size: 1.4rem;
-  padding: 1rem .8rem;
 
   .icon {
     color: #a4a4a4;
@@ -67,16 +76,13 @@
   width: 16px;
 }
 
-.noPadBtm {
-  padding-bottom: 0;
-}
-
 .category {
   align-items: center;
   color: #a4a4a4;
   display: flex;
   font-size: 1.2rem;
-  padding: .3rem .8rem 1rem 3.2rem;
+  margin-top: .3rem;
+  padding-left: 2.4rem;
 
   svg {
     margin: 0 .6rem .1rem 0;
