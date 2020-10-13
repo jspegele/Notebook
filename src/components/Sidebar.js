@@ -4,7 +4,7 @@ import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
 import AppSidebar from './AppSidebar'
-import NoteSidebar from './NoteSidebar'
+import PageSidebar from './PageSidebar'
 import AppToolbar from './AppToolbar'
 
 import styles from './style/Sidebar.module.scss'
@@ -27,7 +27,7 @@ const Sidebar = () => {
               visibleSections={sections}
               currentSectionId={currentSectionId}
             />
-            <NoteSidebar
+            <PageSidebar
               settings={settings}
               pages={pages}
               filters={filters}
