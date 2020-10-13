@@ -16,13 +16,13 @@ const AppToolbar = ({ slim }) => {
         })}
       >
         {settings.sidebar === 'full' ? (
-          <FiArrowLeft size="1/8rem" />
+          <FiArrowLeft />
         ) : (
-          <FiArrowRight size="1.8rem" />
+          <FiArrowRight />
         )}
       </button>
-      <button><FiPlus size="1.8rem" /></button>
-      <button><FiSettings size="1.8rem" /></button>
+      <button><FiPlus /></button>
+      <button><FiSettings /></button>
     </div>
   )
 }

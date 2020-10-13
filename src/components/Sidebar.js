@@ -3,6 +3,7 @@ import { SettingsContext } from '../contexts/settings'
 import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
+import { getVisiblePages } from '../selectors/pages'
 import AppSidebar from './AppSidebar'
 import PageSidebar from './PageSidebar'
 import AppToolbar from './AppToolbar'
@@ -14,8 +15,9 @@ const Sidebar = () => {
   const { sections } = useContext(SectionsContext)
   const { pages, dispatchPages } = useContext(PagesContext)
   const { filters } = useContext(FiltersContext)
+  const visiblePages = getVisiblePages(pages, filters)
   const currentSectionId = filters.section || null
-  const currentPageId = filters.page || (pages.length ? pages[0].id : null)
+  const currentPageId = filters.page || (pages.length ? visiblePages[0].id : null)
 
   if (settings.sidebar === 'full') {
     return (

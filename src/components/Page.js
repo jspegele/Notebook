@@ -7,6 +7,7 @@ import { AuthContext } from '../contexts/auth'
 import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
+import { getVisiblePages } from '../selectors/pages'
 
 import styles from './style/Page.module.scss'
 
@@ -15,13 +16,13 @@ const Page = () => {
   const { dispatchSections } = useContext(SectionsContext)
   const { pages, dispatchPages } = useContext(PagesContext)
   const { filters, updateFilters } = useContext(FiltersContext)
+  const visiblePages = getVisiblePages(pages, filters)
   const currentSectionId = filters.section || null
-  const currentPageId = filters.page || ((filters.tab === 'all' && pages.length) ? pages[0].id : null)
+  const currentPageId = filters.page || ((filters.tab === 'all' && pages.length) ? visiblePages[0].id : null)
   const currentPage = pages.filter(page => page.id === currentPageId)[0]
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [pageAdded, setPageAdded] = useState(false)
-  const [saving, setSaving] = useState(false)
   const titleInput = createRef()
 
   useEffect(() => {
@@ -47,21 +48,12 @@ const Page = () => {
     }
   }, [pageAdded, updateFilters, auth, currentSectionId, pages, dispatchSections])
 
-  // when pages changes, stop saving icon
-  useEffect(() => {
-    setTimeout(() => {
-      setSaving(false)
-    }, 1000)
-  }, [title, body])
-
   const updateTitle = e => {
-    setSaving(true)
     setTitle(e.target.value)
     startEditPage(auth.uid, currentPage.id, { title: e.target.value }, dispatchPages)
   }
 
   const updateBody = e => {
-    setSaving(true)
     setBody(e.target.value)
     startEditPage(auth.uid, currentPage.id, { body: e.target.value }, dispatchPages)
   }

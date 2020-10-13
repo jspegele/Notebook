@@ -7,7 +7,8 @@ const FiltersContextProvider = props => {
     tab: 'all',
     section: null,
     page: null,
-    text: ''
+    text: '',
+    sort: 'createdDesc'
   })
   const updateFilters = updates => {
     setFilters({

@@ -38,9 +38,6 @@ const Search = () => {
           </button>
         )}
       </div>
-      <div className={styles.message}>
-        {text && `showing results from ${placeholderText}`}
-      </div>
     </div>
   )
 }

@@ -1,0 +1,46 @@
+.tools {
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: flex-end;
+  padding: .8rem;
+
+  button {
+    align-items: center;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.4rem;
+    outline: none;
+  }
+}
+
+.title {
+  font-size: 1.4rem;
+  outline: none;
+  padding: .2rem 1rem;
+  width: 100%;
+}
+
+ul.menu {
+  flex-shrink: 0;
+  outline: none;
+  padding: .2rem 0;
+
+  li {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.4rem;
+    padding: .4rem 4rem .4rem 1rem;
+
+    svg {
+      margin-right: 1.6rem;
+    }
+
+    &:hover {
+      background: #e5e5e5;
+    }
+  }
+}
