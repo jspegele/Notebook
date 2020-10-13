@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { FiX } from 'react-icons/fi'
 import { SectionsContext } from '../contexts/sections'
 import { FiltersContext } from '../contexts/filters'
 
@@ -14,19 +15,29 @@ const Search = () => {
     )
   )
 
-  const handleSearch = e => {
-    setText(e.target.value)
-    updateFilters({ text: e.target.value })
+  const handleSearch = (text) => {
+    setText(text)
+    updateFilters({ text })
   }
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder={`Search ${placeholderText}`}
-        className={styles.search}
-        value={text}
-        onChange={handleSearch}
-      />
+      <div className={styles.searchField}>
+        <input
+          type="text"
+          placeholder={`Search ${placeholderText}`}
+          className={styles.search}
+          value={text}
+          onChange={e => handleSearch(e.target.value)}
+        />
+        {text && (
+          <button
+            title="clear search"
+            onClick={() => handleSearch('')}
+          >
+            <FiX size="1.6rem"/>
+          </button>
+        )}
+      </div>
       <div className={styles.message}>
         {text && `showing results from ${placeholderText}`}
       </div>
