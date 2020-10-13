@@ -5,6 +5,7 @@ import AuthContextProvider, { AuthContext } from './contexts/auth'
 import FiltersContextProvider from './contexts/filters'
 import SectionsContextProvider from './contexts/sections'
 import PagesContextProvider from './contexts/pages'
+import SettingsContextProvider from './contexts/settings'
 
 function App() {
   return (
@@ -16,13 +17,15 @@ function App() {
           if (!!auth.uid) {
             // AUTHENTICATED
             return (
-              <SectionsContextProvider>
-                <PagesContextProvider>
-                  <FiltersContextProvider>
-                    <Notebook />
-                    </FiltersContextProvider>
-                </PagesContextProvider>
-              </SectionsContextProvider>
+              <SettingsContextProvider>
+                <SectionsContextProvider>
+                  <PagesContextProvider>
+                    <FiltersContextProvider>
+                      <Notebook />
+                      </FiltersContextProvider>
+                  </PagesContextProvider>
+                </SectionsContextProvider>
+              </SettingsContextProvider>
             )
           } else {
             // UNUTHENTICATED

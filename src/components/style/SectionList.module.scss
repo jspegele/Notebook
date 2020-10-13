@@ -1,6 +1,15 @@
-.sectionList {
+.container {
   display: flex;
   flex-direction: column;
+}
+
+.header {
+  color: #a4a4a4;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  padding: 1rem .8rem;
+  text-transform: uppercase;
 }
 
 .sections {

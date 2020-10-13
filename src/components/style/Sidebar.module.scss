@@ -1,9 +1,22 @@
-.contents {
+.container {
   background: #eee;
   border-right: 1px solid #999;
   display: flex;
-  flex-direction: column;
   font-size: 1.4rem;
+  overflow: hidden;
+  width: 50rem;
+  transition: width .2s;
+}
+
+.slim {
+  justify-content: center;
+  width: 5.2rem;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .lists {

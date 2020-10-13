@@ -8,6 +8,7 @@ import styles from './style/SectionList.module.scss'
 const SectionList = ({ visibleSections, currentSectionId }) => {
   return (
     <div className={styles.sectionList}>
+      <div className={styles.header}>Categories</div>
       <div className={styles.visibleSections}>
         {visibleSections.length > 0 && (
           visibleSections.map(section => (
