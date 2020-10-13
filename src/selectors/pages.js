@@ -1,5 +1,7 @@
-export const getVisiblePages = (pages, { tab, section }) => {
+export const getVisiblePages = (pages, { tab, section, text }) => {
   return pages.filter(page => {
+    const textMatch = page.title.toLowerCase().includes(text.toLowerCase()) ||
+      page.body.toLowerCase().includes(text.toLowerCase())
     const tabMatch = (tab === 'all' || tab === 'categories') ? !page.trash : (
       tab === 'favorites' ? page.favorite : (
         tab === 'trash' ? page.trash : (
@@ -8,6 +10,6 @@ export const getVisiblePages = (pages, { tab, section }) => {
       )
     )
     const sectionMatch = section ? page.section === section : true
-    return tabMatch && sectionMatch
+    return textMatch && tabMatch && sectionMatch
   })
 }

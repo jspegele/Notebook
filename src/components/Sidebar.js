@@ -3,10 +3,10 @@ import { SectionsContext } from '../contexts/sections'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
 import Header from './Header'
-import PageList from './PageList'
+import AppSidebar from './AppSidebar'
+import NoteSidebar from './NoteSidebar'
 
 import styles from './style/Sidebar.module.scss'
-import AppSidebar from './AppSidebar'
 
 const Sidebar = () => {
   const { sections } = useContext(SectionsContext)
@@ -22,7 +22,7 @@ const Sidebar = () => {
           visibleSections={sections}
           currentSectionId={currentSectionId}
         />
-        <PageList
+        <NoteSidebar
           pages={pages}
           filters={filters}
           currentSectionId={currentSectionId}

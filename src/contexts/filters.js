@@ -6,7 +6,8 @@ const FiltersContextProvider = props => {
   const [filters, setFilters] = useState({
     tab: 'all',
     section: null,
-    page: null
+    page: null,
+    text: ''
   })
   const updateFilters = updates => {
     setFilters({
