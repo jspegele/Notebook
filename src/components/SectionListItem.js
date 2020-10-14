@@ -9,15 +9,17 @@ import { SectionsContext } from '../contexts/sections'
 import styles from './style/ListItem.module.scss'
 import dropdownStyles from './style/Dropdown.module.scss'
 
-const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) => {
+const SectionListItem = ({ section }) => {
   const { auth } = useContext(AuthContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const [showDropdownBtn, setShowDropdownBtn] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [editableTitle, setEditableTitle] = useState(false)
-  const [titleInput, setTitleInput] = useState(title || 'Untitled Category')
+  const [titleInput, setTitleInput] = useState(section.title || 'Untitled Category')
+
   const currentSectionId = filters.section || null
+  const activeSection = currentSectionId === section.id ? true : false
   const dropdownWrapperRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -52,8 +54,8 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
   const saveSection = useCallback(() => {
     setEditableTitle(false)
     setTitleInput(titleInput.trim())
-    startEditSection(auth.uid, sectionId, { title: titleInput.trim() }, dispatchSections)
-  }, [auth, sectionId, titleInput, dispatchSections])
+    startEditSection(auth.uid, section.id, { title: titleInput.trim() }, dispatchSections)
+  }, [auth, section.id, titleInput, dispatchSections])
 
   // Save new title if user clicks outside of input field
   useEffect(() => {
@@ -78,14 +80,14 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
   }
 
   const handleDelete = () => {
-    if (visibleSections.length > 1) {
-      const currSectionIndex = visibleSections.findIndex(el => el.id === sectionId)
+    if (sections.length > 1) {
+      const currSectionIndex = sections.findIndex(el => el.id === section.id)
       const newSectionIndex = currSectionIndex === 0 ? 1 : currSectionIndex - 1
-      const newSectionId = !!visibleSections[newSectionIndex] ? visibleSections[newSectionIndex].id : ''
-      if (currentSectionId === sectionId) {
+      const newSectionId = !!sections[newSectionIndex] ? sections[newSectionIndex].id : ''
+      if (currentSectionId === section.id) {
         updateFilters({
           section: newSectionId,
-          page: sections.filter(section => section.id === newSectionId)[0].currentPage
+          page: sections.filter(el => el.id === newSectionId)[0].currentPage
         })
       }
     } else {
@@ -95,13 +97,13 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
         page: null
       })
     }
-    startRemoveSection(auth.uid, sectionId, dispatchSections)
+    startRemoveSection(auth.uid, section.id, dispatchSections)
   }
 
   const handleSetSection = () => {
     updateFilters({
-      section: sectionId,
-      page: sections.filter(section => section.id === sectionId)[0].currentPage,
+      section: section.id,
+      page: sections.filter(el => el.id === section.id)[0].currentPage,
       tab: 'categories'
     })
   }
@@ -114,11 +116,11 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
         onMouseEnter={() => setShowDropdownBtn(true)}
         onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
       >
-        <div className={styles.titleContainer}>
-          <div
-            className={styles.title}
-            onClick={handleSetSection}
-          >
+        <div
+          className={styles.titleContainer}
+          onClick={handleSetSection}
+        >
+          <div className={styles.title}>
             {editableTitle ? (
               <form onSubmit={handleSave}>
                 <input
@@ -135,7 +137,7 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
                   <FiFolder size="1.2rem" />
                 </div>
                 <div className={styles.text}>
-                  {title || "Untitled Category"}
+                  {section.title || "Untitled Category"}
                 </div>
               </>
             )}
@@ -178,14 +180,7 @@ const SectionListItem = ({ visibleSections, sectionId, title, activeSection }) =
 }
 
 SectionListItem.propTypes = {
-  sectionId: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  activeSection: PropTypes.bool
-}
-
-SectionListItem.defaultProps = {
-  title: '',
-  activeSection: false
+  section: PropTypes.object.isRequired
 }
  
 export default SectionListItem

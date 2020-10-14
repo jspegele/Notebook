@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { FiStar, FiFolder, FiFile, FiEdit2, FiX, FiTrash, FiArrowUp } from 'react-icons/fi'
+import { FiStar, FiFolder, FiFile, FiX, FiTrash, FiArrowUp } from 'react-icons/fi'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
 import { startRemovePage, startRestoreTrash, startSetFavorite, startRemoveSection, startSetTrash, startAssignSection } from '../actions/pages'
@@ -13,7 +13,7 @@ import { getVisiblePages } from '../selectors/pages'
 import styles from './style/ListItem.module.scss'
 import dropdownStyles from './style/Dropdown.module.scss'
 
-const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, activePage }) => {
+const PageListItem = ({ pageId }) => {
   const { auth } = useContext(AuthContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
@@ -22,6 +22,15 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
   const [showDropdown, setShowDropdown] = useState(false)
   const [sectionSelect, setSectionSelect] = useState('default')
   const dropdownWrapperRef = useRef(null)
+  
+  const visiblePages = getVisiblePages(pages, filters)
+  const thisPage = pages.find(page => page.id === pageId)
+  const title = thisPage.title
+  const sectionId = thisPage.section
+  const favorite = thisPage.favorite
+  const currentSectionId = filters.section || null
+  const currentPageId = filters.page || (visiblePages.length ? visiblePages[0].id : null)
+  const activePage = pageId === currentPageId ? true : false
 
   const handleContextMenu = e => {
     e.preventDefault()
@@ -105,7 +114,6 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
   }
 
   const getNewNoteId = () => {
-    const visiblePages = getVisiblePages(pages, filters)
     const currNoteIndex = visiblePages.findIndex(el => el.id === pageId)
     const newNoteIndex = currNoteIndex === 0 ? 1 : currNoteIndex - 1
     const newPageId = !!visiblePages[newNoteIndex] ? visiblePages[newNoteIndex].id : null
@@ -235,14 +243,6 @@ const PageListItem = ({ pageId, title, sectionId, favorite, currentSectionId, ac
               onClick={handlePermanentlyDelete}
             >
               <FiX size="1.8rem" />Permanently delete
-              {/* <ConfirmationModal
-                modalOpen={modalOpen}
-                handleAction={deleteNote}
-                handleCloseModal={handleCloseModal}
-                messageTxt={`Are you sure you want to permanently delete this note? All of your ${currentPage.title} notes will be deleted and not recoverable.`}
-                primaryBtnTxt={'Delete Page'}
-                destructive={true}
-              /> */}
             </div>
           </>
         ) : (

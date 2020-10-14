@@ -1,12 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 import AddPage from './AddPage'
 import PageListItem from './PageListItem'
+import { PagesContext } from '../contexts/pages'
+import { FiltersContext } from '../contexts/filters'
 import { getVisiblePages } from '../selectors/pages'
 
 import styles from './style/PageList.module.scss'
 
-const PageList = ({ pages, filters, currentSectionId, currentPageId, dispatchPages }) => {
+const PageList = () => {
+  const { pages } = useContext(PagesContext)
+  const { filters } = useContext(FiltersContext)
   const visiblePages = getVisiblePages(pages, filters)
   return (
     <div className={styles.pageList}>
@@ -17,11 +20,6 @@ const PageList = ({ pages, filters, currentSectionId, currentPageId, dispatchPag
               <PageListItem
                 key={page.id}
                 pageId={page.id}
-                title={page.title}
-                sectionId={page.section}
-                favorite={page.favorite}
-                currentSectionId={currentSectionId}
-                activePage={currentPageId === page.id ? true : false}
               />
             ))
           )}
@@ -32,18 +30,6 @@ const PageList = ({ pages, filters, currentSectionId, currentPageId, dispatchPag
       <AddPage />
     </div>
   )
-}
-
-PageList.propTypes = {
-  currentSectionId: PropTypes.string,
-  currentPageId: PropTypes.string,
-  visiblePages: PropTypes.array
-}
-
-PageList.defaultProps = {
-  currentSectionId: '',
-  currentPageId: '',
-  visiblePages: []
 }
  
 export default PageList

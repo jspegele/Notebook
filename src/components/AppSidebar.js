@@ -5,21 +5,12 @@ import SectionList from './SectionList'
 
 import styles from './style/AppSidebar.module.scss'
 
-const AppSidebar = ({ settings, visibleSections, currentSectionId }) => {
+const AppSidebar = () => {
   return (
     <div className={styles.sidebar}>
-      <AppToolbar
-        settings={settings}
-      />
-      <AppNav
-        settings={settings}
-        currentSectionId={currentSectionId}
-      />
-      <SectionList
-        settings={settings}
-        visibleSections={visibleSections}
-        currentSectionId={currentSectionId}
-      />
+      <AppToolbar />
+      <AppNav />
+      <SectionList />
     </div>
   )
 }

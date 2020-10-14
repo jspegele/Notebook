@@ -5,11 +5,12 @@ import { FiltersContext } from '../contexts/filters'
 
 import itemStyles from './style/ListItem.module.scss'
 
-const AppNav = ({ currentSectionId }) => {
+const AppNav = () => {
   const { pages } = useContext(PagesContext)
+  const { filters, updateFilters } = useContext(FiltersContext)
   const favorites = pages.filter(page => page.favorite)
   const trash = pages.filter(page => page.trash)
-  const { filters, updateFilters } = useContext(FiltersContext)
+  const currentSectionId = filters.section || null
   return (
     <div>
       <div

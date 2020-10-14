@@ -5,18 +5,12 @@ import PageList from './PageList'
 
 import styles from './style/PageSidebar.module.scss'
 
-const PageSidebar = ({ pages, filters, currentSectionId, currentPageId, dispatchPages }) => {
+const PageSidebar = () => {
   return (
     <div className={styles.container}>
       <Search />
       <PageListTools />
-      <PageList
-        pages={pages}
-        filters={filters}
-        currentSectionId={currentSectionId}
-        currentPageId={currentPageId}
-        dispatchPages={dispatchPages}
-      />
+      <PageList />
     </div>
   )
 }
