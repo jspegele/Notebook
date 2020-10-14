@@ -7,8 +7,6 @@ import { FiltersContext } from '../contexts/filters'
 import { PagesContext } from '../contexts/pages'
 import { SectionsContext } from '../contexts/sections'
 
-import styles from './style/AddLink.module.scss'
-
 const AddPage = () => {
   const { auth } = useContext(AuthContext)
   const { filters, updateFilters } = useContext(FiltersContext)
@@ -32,10 +30,10 @@ const AddPage = () => {
   }
   return (
     <button
-      className={styles.add}
+      title="Create a note"
       onClick={handleAddPage}
     >
-      <FiPlus size="1.8rem"/> Add Note
+      <FiPlus />
     </button>
   )
 }

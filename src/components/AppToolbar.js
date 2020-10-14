@@ -1,26 +1,17 @@
 import React, { useContext } from 'react'
-import { FiPlus, FiSettings, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
+import { FiSettings } from 'react-icons/fi'
 import { SettingsContext } from '../contexts/settings'
+import AddPage from './AddPage'
 
 import styles from './style/AppToolbar.module.scss'
+import ToggleSidebar from './ToggleSidebar'
 
 const AppToolbar = () => {
-  const { settings, updateSettings } = useContext(SettingsContext)
+  const { settings } = useContext(SettingsContext)
   return (
     <div className={settings.sidebar === 'slim' ? `${styles.toolbar} ${styles.slim}` : styles.toolbar}>
-      <button
-        title={settings.sidebar === 'full' ? 'Minimize sidebar' : 'Expand sidebar'}
-        onClick={() => updateSettings({
-          sidebar: settings.sidebar === 'full' ? 'slim' : 'full'
-        })}
-      >
-        {settings.sidebar === 'full' ? (
-          <FiArrowLeft />
-        ) : (
-          <FiArrowRight />
-        )}
-      </button>
-      <button><FiPlus /></button>
+      <ToggleSidebar />
+      <AddPage />
       <button><FiSettings /></button>
     </div>
   )

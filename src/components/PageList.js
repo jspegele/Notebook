@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import AddPage from './AddPage'
 import PageListItem from './PageListItem'
 import { PagesContext } from '../contexts/pages'
 import { FiltersContext } from '../contexts/filters'
@@ -27,7 +26,6 @@ const PageList = () => {
       ) : (
         <></>
       )}
-      <AddPage />
     </div>
   )
 }
