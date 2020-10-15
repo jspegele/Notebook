@@ -1,12 +1,10 @@
-@import '../../styles/colors.scss';
-
 .container {
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  color: $text-secondary;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   font-weight: 600;
   margin-top: 2rem;
@@ -17,26 +15,4 @@
 .sections {
   flex-grow: 1;
   overflow-y: auto;
-}
-
-.section {
-  cursor: pointer;
-  overflow: hidden;
-  padding: 1rem 2rem;
-  text-overflow: ellipsis;
-  transition: background .05s;
-  white-space: nowrap;
-
-  &:hover {
-    background: $gray300;
-  }
-}
-
-.activeSection {
-  @extend .section;
-  background: $gray400;
-
-  &:hover {
-    background: $gray400;
-  }
 }

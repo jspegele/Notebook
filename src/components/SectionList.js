@@ -10,7 +10,7 @@ const SectionList = () => {
   return (
     <div className={styles.sectionList}>
       <div className={styles.header}>Categories</div>
-      <div className={styles.visibleSections}>
+      <div className={styles.sections}>
         {sections.length > 0 && (
           sections.map(section => (
             <SectionListItem

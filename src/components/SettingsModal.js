@@ -29,7 +29,25 @@ const PurpleSwitch = withStyles({
 const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
   const { settings, saveSettings } = useContext(SettingsContext)
   const { updateFilters } = useContext(FiltersContext)
-  // const [darkMode, setDarkMode] = useState(false)
+
+  const [darkMode, setDarkMode] = useState('light')
+  useEffect(() => {
+    setDarkMode(settings.theme)
+  }, [settings.theme])
+  const handleTheme = () => {
+    saveSettings({ theme: darkMode === 'dark' ? 'light' : 'dark' })
+    setDarkMode(darkMode === 'dark' ? 'light' : 'dark')
+  }
+
+  const [sidebar, setSidebar] = useState('full')
+  useEffect(() => {
+    setSidebar(settings.sidebar)
+  }, [settings.sidebar])
+  const handleSidebar = () => {
+    saveSettings({ sidebar: sidebar === 'full' ? 'slim' : 'full' })
+    setSidebar(sidebar === 'full' ? 'slim' : 'full')
+  }
+
   const [defaultSort, setDefaultSort] = useState(settings.defaultSort)
   useEffect(() => {
     setDefaultSort(settings.defaultSort)
@@ -40,15 +58,6 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
     saveSettings({ defaultSort: e.target.value })
   }
 
-  const [sidebar, setSidebar] = useState('full')
-  useEffect(() => {
-    console.log('yo')
-    setSidebar(settings.sidebar)
-  }, [settings.sidebar])
-  const handleSidebar = e => {
-    saveSettings({ sidebar: sidebar === 'full' ? 'slim' : 'full' })
-    setSidebar(sidebar === 'full' ? 'slim' : 'full')
-  }
   return (
     <Modal
       appElement={document.getElementById('root')}
@@ -98,14 +107,13 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
           <div className={styles.option}>
             <div className={styles.optionText}>Dark Mode</div>
             <div className={styles.optionValue}>
-              {/* <PurpleSwitch
-                checked={darkMode}
-                onChange={() => setDarkMode(!darkMode)}
+              <PurpleSwitch
+                checked={darkMode === 'dark' ? true : false}
+                onChange={handleTheme}
                 color="secondary"
                 name="darkMode"
                 inputProps={{ 'aria-label': 'primary checkbox' }}
-              /> */}
-              <em>coming soon</em>
+              />
             </div>
           </div>
           <div className={styles.option}>

@@ -1,6 +1,5 @@
-@import '../../styles/colors.scss';
-
 .notePage {
+  background: var(--surface);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -13,29 +12,15 @@
   width: 100%;
 
   input {
+    background: var(--surface);
     border: none;
-    border-bottom: 1px solid $gray700;
+    border-bottom: 1px solid var(--sidebar-borders);
+    color: var(--text);
     flex-grow: 1;
     font-size: 3.6rem;
     font-weight: 300;
     outline: none;
     padding-bottom: .6rem;
-  }
-
-  .delete {
-    background: none;
-    border: none;
-    color: $gray400;
-    cursor: pointer;
-    font-size: 1.6rem;
-    margin-left: 2rem;
-    outline: none;
-    padding: 0;
-    transition: color .2s;
-
-    &:hover {
-      color: $error;
-    }
   }
 }
 
@@ -51,7 +36,9 @@
 }
 
 textarea.notes {
+  background: var(--surface);
   border:none;
+  color: var(--text);
   flex-grow: 1;
   font-size: 1.6rem;
   margin-top: 2rem;
@@ -85,12 +72,12 @@ textarea.notes {
     button {
       background: none;
       border: none;
-      color: $primary;
+      color: var(--primary);
       cursor: pointer;
       font-size: 2rem;
 
       &:hover {
-        color: $primary-dark;
+        color: var(--primary-dark);
       }
     }
   }

@@ -1,26 +1,24 @@
-@import '../../styles/colors.scss';
-
 .item {
   cursor: pointer;
   display: flex;
   transition: background .05s;
 
   &:hover {
-    background: $gray200;
+    background: var(--item-hover-bg);
   }
 }
 
 .activeItem {
   @extend .item;
-  background: $gray300;
+  background: var(--item-active-bg);
 
   &:hover {
-    background: $gray300;
+    background: var(--item-active-bg);
   }
 }
 
 .borderbtm {
-  border-bottom: 1px solid $gray200;
+  border-bottom: 1px solid var(--sidebar-borders);
 }
 
 .titleContainer {
@@ -44,7 +42,7 @@
   font-size: 1.4rem;
 
   .icon {
-    color: $text-secondary;
+    color: var(--text-secondary);
     display: flex;
     flex: 0 0 24px;
   }
@@ -61,7 +59,7 @@
   }
 
   input {
-    border: 1px solid $gray300;
+    border: 1px solid var(--sidebar-borders);
     border-radius: 3px;
     font-size: 1.4rem;
     outline: none;
@@ -70,7 +68,7 @@
 }
 
 .menu {
-  color: $text-secondary;
+  color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   margin: 1rem 1rem 0 0;
@@ -80,7 +78,7 @@
 
 .category {
   align-items: center;
-  color: $text-secondary;
+  color: var(--text-secondary);
   display: flex;
   font-size: 1.2rem;
   margin-top: .3rem;

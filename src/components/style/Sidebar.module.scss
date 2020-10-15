@@ -1,8 +1,6 @@
-@import '../../styles/colors.scss';
-
 .container {
-  background: $gray100;
-  border-right: 1px solid #999;
+  background: var(--app-sidebar);
+  border-right: 1px solid var(--sidebar-borders);
   display: flex;
   font-size: 1.4rem;
   overflow: hidden;

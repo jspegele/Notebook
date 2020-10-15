@@ -1,0 +1,104 @@
+.light {
+  --primary: #6002ee;
+  --primary-light: #9965f4;
+  --primary-dark: #3d00e0;
+  --secondary: #00b798; // dark contrast
+  --secondary-light: #03dac4; // dark contrast
+  --secondary-dark: #009a77; // dark contrast
+  --alt: #0336ff;
+  --alt-light: #5954ff; // dark contrast
+  --alt-dark: #002bf0;
+  --error: #cc1d33;
+  --error-light: #eb3043; // dark contrast
+  --error-dark: #b00020;
+  --warning: #eb7b30; // dark contrast
+  --warning-light: #f99837; // dark contrast
+  --warning-dark: #df652c; // dark contrast
+  --success: #2cdf65; // dark contrast
+  --success-light: #9aeda9; // dark contrast
+  --success-dark: #00c739; // dark contrast
+  
+  --text: rgba(0, 0, 0, 0.87);
+  --text-secondary: rgba(0, 0, 0, 0.54);
+  --text-disabled: rgba(0, 0, 0, 0.38);
+  
+  
+  --surface: #ffffff;
+  --page-sidebar: #e8e8e8;
+  --app-sidebar:#ebebeb;
+  --sidebar-borders: #e0e0e0;
+  --search-bg: #fff;
+  --item-hover-bg: #e0e0e0;
+  --item-active-bg: #dbdbdb;
+  --toolbar-button-bg: #e0e0e0;
+  --dropdown-bg: #ffffff;
+  --dropdown-select: #ffffff;
+  --dropdown-hover: #ededed;
+  --settings-bg: #fff;
+  --settings-hover: #ebebeb;
+  --settings-photo: #e3e3e3;
+  
+  // surface: #ffffff;
+  // surface01dp: #f2f2f2;
+  // surface02dp: #ededed;
+  // surface03dp: #ebebeb;
+  // surface04dp: #e8e8e8;
+  // surface06dp: #e3e3e3;
+  // surface08dp: #e0e0e0;
+  // surface12dp: #dbdbdb;
+  // surface16dp: #d9d9d9;
+  // surface024p: #d6d6d6;
+}
+
+.dark{
+  --primary: #bb86fc;
+  --primary-light: #cfabfd;
+  --primary-dark: #994af1;
+  --secondary: #03DAC6; // dark contrast
+  --secondary-light: #92e9dc; // dark contrast
+  --secondary-dark: #00b798; // dark contrast
+  --alt: #0336ff;
+  --alt-light: #5954ff; // dark contrast
+  --alt-dark: #002bf0;
+  --error: #cf6679; // dark contrast
+  --error-light: #e49cad; // dark contrast
+  --error-dark: #b75463; // dark contrast
+  --warning: #eb7b30; // dark contrast
+  --warning-light: #f99837; // dark contrast
+  --warning-dark: #df652c; // dark contrast
+  --success: #2cdf65; // dark contrast
+  --success-light: #9aeda9; // dark contrast
+  --success-dark: #00c739; // dark contrast
+  
+  --text: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.54);
+  --text-disabled: rgba(255, 255, 255, 0.38);
+  
+  --surface: #121212;
+  --page-sidebar: #272727;
+  --app-sidebar: #252525;
+  --sidebar-borders: #2f2f2f;
+  --search-bg: #1e1e1e;
+  --item-hover-bg: #2f2f2f;
+  --item-active-bg: #333333;
+  --toolbar-button-bg: #2f2f2f;
+  --dropdown-bg: #2f2f2f;
+  --dropdown-select: #353535;
+  --dropdown-hover: #353535;
+  --settings-bg: #353535;
+  --settings-hover: #2c2c2c;
+  --settings-photo: #333333;
+
+  
+  // surface: #121212;
+  // surface01dp: #1e1e1e;
+  // surface02dp: #232323;
+  // surface03dp: #252525;
+  // surface04dp: #272727;
+  // surface06dp: #2c2c2c;
+  // surface08dp: #2f2f2f;
+  // surface12dp: #333333;
+  // surface16dp: #353535;
+  // surface24dp: #383838;
+}
+

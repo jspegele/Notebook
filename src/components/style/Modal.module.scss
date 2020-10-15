@@ -1,5 +1,3 @@
-@import '../../styles/colors.scss';
-
 .overlay {
   position: fixed;
   top: 0px;
@@ -10,7 +8,7 @@
 
 .modal {
   background-color: #fff;
-  box-shadow: 0 0 10px 5px $gray600;
+  box-shadow: 0 0 10px 5px var(--surface);
   max-height: 80vh;
   outline: none;
   overflow-y: auto;

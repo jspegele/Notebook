@@ -1,8 +1,6 @@
-@import '../../styles/colors.scss';
-
 .tools {
   align-items: center;
-  border-bottom: 1px solid $gray300;
+  border-bottom: 1px solid var(--sidebar-borders);
   display: flex;
   justify-content: flex-end;
   padding: .8rem;
@@ -11,7 +9,7 @@
     align-items: center;
     background: none;
     border: none;
-    color: $text-secondary;
+    color: var(--text-secondary);
     cursor: pointer;
     display: flex;
     font-size: 1.4rem;
@@ -43,7 +41,7 @@ ul.menu {
     }
 
     &:hover {
-      background: $gray300;
+      background: #ededed;
     }
   }
 }
