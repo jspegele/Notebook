@@ -1,6 +1,9 @@
+@import '../../styles/colors.scss';
+
 .button {
-  background: #6200ee;
+  background: $primary;
   border: none;
+  border-radius: 3px;
   color: #fff;
   cursor: pointer;
   display: inline-block;
@@ -13,31 +16,31 @@
   transition: background-color .2s ease, color .2s ease;
 
   &:hover:enabled {
-    background: #5300e8;
+    background: $primary-dark;
   }
 
   &:active {
-    -webkit-box-shadow: inset 0px 0px 5px #c2c2c2;
-       -moz-box-shadow: inset 0px 0px 5px #c2c2c2;
-            box-shadow: inset 0px 0px 5px #c2c2c2;
+    -webkit-box-shadow: inset 0px 0px 5px $gray400;
+       -moz-box-shadow: inset 0px 0px 5px $gray400;
+            box-shadow: inset 0px 0px 5px $gray400;
   }
 }
 
 .secondary {
-  background: #7a7a7a;
+  background: $gray600;
 
   &:hover:enabled  {
-    background: #666;
+    background: $gray700;
   }
 }
 
 .tertiary {
   background: none;
-  color: #666;
+  color: $text-secondary;
 
   &:hover:enabled {
-    background: #e5e5e5;
-    color: #474747;
+    background: $gray300;
+    color: $text;
   }
 
   &:active {
@@ -49,27 +52,27 @@
 
 .tertiary-light {
   background: none;
-  color: #f6f6f6;
+  color: $text-secondary;
 
   &:hover:enabled {
     background: none;
-    color: #e5e5e5;
+    color: $text;
   }
 }
 
 .disabled {
-  background: #c2c2c2;
-  color: #666;
+  background: $gray400;
+  color: $text-disabled;
 
   &:hover:enabled {
-    background: #a4a4a4;
+    background: $gray500;
   }
 }
 
 .destructive {
-  background: #b00020;
+  background: $error;
 
   &:hover:enabled {
-    background: #cc1d33;
+    background: $error-dark;
   }
 }

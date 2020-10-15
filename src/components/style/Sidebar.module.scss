@@ -1,5 +1,7 @@
+@import '../../styles/colors.scss';
+
 .container {
-  background: #eee;
+  background: $gray100;
   border-right: 1px solid #999;
   display: flex;
   font-size: 1.4rem;

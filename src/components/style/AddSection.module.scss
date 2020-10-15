@@ -1,8 +1,10 @@
+@import '../../styles/colors.scss';
+
 .add {
   align-items: center;
   background: none;
   border: none;
-  color: #9965f4;
+  color: $text-secondary;
   cursor: pointer;
   display: flex;
   font-size: 1.4rem;
@@ -12,7 +14,7 @@
   width: 100%;
 
   &:hover {
-    color: #6002ee;
+    color: $primary-light;
   }
 
   svg {
@@ -24,7 +26,7 @@
   padding: 1rem .8rem;
   
   input {
-    border: 1px solid #c2c2c2;
+    border: 1px solid $gray400;
     border-radius: 3px;
     font-size: 1.6rem;
     max-width: 16rem;
@@ -35,7 +37,7 @@
 }
 
 .error {
-  color: #b00020;
+  color: $error;
   display: block;
   font-size: 1.3rem;
   padding: 1rem .8rem;

@@ -1,10 +1,12 @@
+@import '../../styles/colors.scss';
+
 .container {
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  color: #a4a4a4;
+  color: $text-secondary;
   font-size: 1.1rem;
   font-weight: 600;
   margin-top: 2rem;
@@ -26,15 +28,15 @@
   white-space: nowrap;
 
   &:hover {
-    background: #dedede;
+    background: $gray300;
   }
 }
 
 .activeSection {
   @extend .section;
-  background: #c2c2c2;
+  background: $gray400;
 
   &:hover {
-    background: #c2c2c2;
+    background: $gray400;
   }
 }

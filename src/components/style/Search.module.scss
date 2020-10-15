@@ -1,3 +1,5 @@
+@import '../../styles/colors.scss';
+
 .container {
   padding: .8rem;
 }
@@ -5,7 +7,7 @@
 .searchField {
   align-items: center;
   background: #fff;
-  border: 1px solid #c2c2c2;
+  border: 1px solid $gray400;
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -15,7 +17,7 @@
     align-items: center;
     background: #fff;
     border: none;
-    color: #a4a4a4;
+    color: $text-secondary;
     cursor: pointer;
     display: flex;
     flex: 0 0 1.6rem;
@@ -33,7 +35,7 @@
 }
 
 .message {
-  color: #a4a4a4;
+  color: $text-secondary;
   font-size: 1.2rem;
   height: 1.8rem;
   padding: 0 1.2rem;

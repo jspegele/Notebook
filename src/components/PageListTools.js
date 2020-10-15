@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu'
-import { BiSortDown } from 'react-icons/bi'
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi'
 import { FiltersContext } from '../contexts/filters'
 

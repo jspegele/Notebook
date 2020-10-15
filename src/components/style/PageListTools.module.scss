@@ -1,14 +1,17 @@
+@import '../../styles/colors.scss';
+
 .tools {
   align-items: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid $gray300;
   display: flex;
   justify-content: flex-end;
   padding: .8rem;
 
   button {
     align-items: center;
+    background: none;
     border: none;
-    color: #666;
+    color: $text-secondary;
     cursor: pointer;
     display: flex;
     font-size: 1.4rem;
@@ -40,7 +43,7 @@ ul.menu {
     }
 
     &:hover {
-      background: #e5e5e5;
+      background: $gray300;
     }
   }
 }

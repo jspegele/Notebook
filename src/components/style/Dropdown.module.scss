@@ -1,6 +1,8 @@
+@import '../../styles/colors.scss';
+
 .content {
   background-color: #fff;
-  border: 1px solid #e5e5e5;
+  border: 1px solid $gray300;
   box-shadow: 0 10px 15px rgba(0,0,0,.07), 0 5px 5px rgba(0,0,0,.2);
   display: none;
   min-width: 32rem;
@@ -18,11 +20,11 @@
   transition: background-color .1s;
 
   svg {
-    color: #a4a4a4;
+    color: $text-secondary;
     margin-right: 1rem;
   }
 
-  &:hover { background-color: #e5e5e5; }
+  &:hover { background-color: $gray300; }
 }
 
 .item {
@@ -30,17 +32,17 @@
 }
 
 .select {
-  border-color: #999;
+  border-color: $gray500;
   border-radius: 3px;
   font-size: 1.4rem;
-  outline-color: #9965f4;
+  outline-color: $primary-light;
   padding: .6rem;
   width: 100%;
 }
 
 .destructive {
   &:hover {
-    background-color: #b00020;
+    background-color: $error;
     color: #fff;
   }
 }

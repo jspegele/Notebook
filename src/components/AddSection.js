@@ -4,9 +4,8 @@ import { startAddSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
 import { SectionsContext } from '../contexts/sections'
 import { FiltersContext } from '../contexts/filters'
-import InputModal from './InputModal'
 
-import styles from './style/AddLink.module.scss'
+import styles from './style/AddSection.module.scss'
 
 const AddSection = () => {
   const { auth } = useContext(AuthContext)
@@ -85,7 +84,7 @@ const AddSection = () => {
         className={styles.add}
         onClick={() => setShowTitleInput(true)}
       >
-        <FiPlus size="1.8rem"/> Add Category
+        <FiPlus /> Add Category
       </button>
     )
   }

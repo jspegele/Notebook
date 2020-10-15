@@ -260,15 +260,7 @@ const PageListItem = ({ pageId }) => {
 }
 
 PageListItem.propTypes = {
-  pageId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  currentSectionId: PropTypes.string,
-  activePage: PropTypes.bool
-}
-
-PageListItem.defaultProps = {
-  activePage: false,
-  currentSectionId: ''
+  pageId: PropTypes.string.isRequired
 }
  
 export default PageListItem

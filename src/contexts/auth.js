@@ -8,7 +8,12 @@ export const AuthContext = createContext()
 function onAuthStateChange(callback) {
   return firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      callback(login(user.uid))
+      callback(login({
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      }))
     } else {
       callback(logout())
     }

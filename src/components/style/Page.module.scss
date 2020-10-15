@@ -1,3 +1,5 @@
+@import '../../styles/colors.scss';
+
 .notePage {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@
 
   input {
     border: none;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid $gray700;
     flex-grow: 1;
     font-size: 3.6rem;
     font-weight: 300;
@@ -23,7 +25,7 @@
   .delete {
     background: none;
     border: none;
-    color: #ddd;
+    color: $gray400;
     cursor: pointer;
     font-size: 1.6rem;
     margin-left: 2rem;
@@ -32,7 +34,7 @@
     transition: color .2s;
 
     &:hover {
-      color: #b00020;
+      color: $error;
     }
   }
 }
@@ -83,12 +85,12 @@ textarea.notes {
     button {
       background: none;
       border: none;
-      color: #6200ee;
+      color: $primary;
       cursor: pointer;
       font-size: 2rem;
 
       &:hover {
-        color: #3d00e0;
+        color: $primary-dark;
       }
     }
   }
