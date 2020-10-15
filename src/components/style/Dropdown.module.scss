@@ -22,7 +22,9 @@
     margin-right: 1rem;
   }
 
-  &:hover { background-color: var(--dropdown-hover); }
+  &:hover { 
+    background-color: var(--dropdown-hover);
+  }
 }
 
 .item {
@@ -43,7 +45,11 @@
 .destructive {
   &:hover {
     background-color: var(--error);
-    color: #fff;
+    color: var(--on-error);
+
+    svg {
+      color: var(--on-error);
+    }
   }
 }
 
