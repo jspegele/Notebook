@@ -10,6 +10,7 @@ const SettingsContextProvider = props => {
   const [settings, setSettings] = useState({
     theme: 'light',
     sidebar: 'full',
+    defaultSidebar: 'full',
     defaultSort: 'createdAsc'
   })
 

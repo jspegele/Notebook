@@ -41,10 +41,13 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
 
   const [sidebar, setSidebar] = useState('full')
   useEffect(() => {
-    setSidebar(settings.sidebar)
-  }, [settings.sidebar])
+    setSidebar(settings.defaultSidebar)
+  }, [settings.defaultSidebar])
   const handleSidebar = () => {
-    saveSettings({ sidebar: sidebar === 'full' ? 'slim' : 'full' })
+    saveSettings({
+      sidebar: sidebar === 'full' ? 'slim' : 'full',
+      defaultSidebar: sidebar === 'full' ? 'slim' : 'full'
+    })
     setSidebar(sidebar === 'full' ? 'slim' : 'full')
   }
 
