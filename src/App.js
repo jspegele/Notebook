@@ -7,7 +7,8 @@ import PagesContextProvider from './contexts/pages'
 import SettingsContextProvider from './contexts/settings'
 import database from './firebase/firebase'
 import Login from './components/Login'
-import Notebook from './components/Notebook'
+import Page from './Page'
+import Sidebar from './Sidebar'
 
 import styles from './styles/App.module.scss'
 import spinner from './images/spinner.gif'
@@ -27,7 +28,8 @@ function App() {
                   <SectionsContextProvider sections={userData.sections && userData.sections}>
                     <PagesContextProvider pages={userData.pages}>
                       <FiltersContextProvider>
-                        <Notebook />
+      <Sidebar />
+      <Page />
                         </FiltersContextProvider>
                     </PagesContextProvider>
                   </SectionsContextProvider>
