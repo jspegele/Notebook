@@ -1,6 +1,6 @@
 # Notebook
 
-![Notebook Logo](https://github.com/jspegele/Notebook/blob/main/src/images/notebook-large.png)
+![Notebook Logo](https://github.com/jspegele/Notebook/blob/main/src/images/notebook.png)
 
 ## A simple and fast notetaking app
 
