@@ -43,10 +43,10 @@
 .destructive {
   &:hover {
     background-color: var(--error);
-    color: var(--on-error);
+    color: var(--on-dark);
 
     svg {
-      color: var(--on-error);
+      color: var(--on-dark);
     }
   }
 }

@@ -1,0 +1,139 @@
+.login {
+  background: var(--login-bg);
+  color: var(--text);
+  height: 100vh;
+  width: 100vw;
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: 100rem;
+}
+
+.header {
+  background: var(--login-header);
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+  }
+
+  h1 {
+    align-items: center;
+    display: flex;
+    font-size: 2.2rem;
+    font-weight: 600;
+
+    svg {
+      color: var(--primary);
+      font-size: 4.8rem;
+      margin-right: 1.2rem;
+    }
+  }
+}
+
+.gButton {
+  align-items: center;
+  background-color: var(--google);
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+  padding: 1px;
+  transition: box-shadow .218s;
+
+  .logo {
+    align-items: center;
+    background: #fff;
+    display: flex;
+    font-size: 1.8rem;
+    justify-content: center;
+    padding: 1.2rem;
+  }
+
+  span {
+    color: #fff;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0 2rem;
+  }
+
+  &:hover {
+    box-shadow: 0 0 3px 3px var(--text-secondary);
+  }
+}
+
+.mainContent {
+
+  h2 {
+    font-size: 4.8rem;
+    font-weight: 600;
+    line-height: 5.6rem;
+    margin-top: 6rem;
+    max-width: 50rem;
+    padding: 0;
+    text-align: center;
+  }
+
+  .subtitle {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 2.4rem;
+    margin-top: 4rem;
+    max-width: 70rem;
+    text-align: center;
+  }
+
+  .signup {
+    margin-top: 2rem;
+  }
+
+  .demo {
+    margin: 4rem 0;
+  }
+
+  .container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+  }
+}
+
+.footer {
+  background: var(--primary);
+  padding: 8rem 0;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    svg {
+      color: var(--on-dark);
+      font-size: 8rem;
+    }
+  }
+
+  ul.nav {
+    display: flex;
+    margin-top: 2rem;
+
+    li a {
+      color: var(--on-dark);
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 0 1.6rem;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--on-dark-hover);
+      }
+    }
+  }
+}
