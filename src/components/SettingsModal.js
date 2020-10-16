@@ -68,7 +68,7 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
       onRequestClose={handleCloseModal}
       contentLabel="Confirm"
       closeTimeoutMS={200}
-      className={modalStyles.modal}
+      className={`${settings.theme} ${modalStyles.modal}`}
       overlayClassName={modalStyles.overlay}
     >
       <div className={styles.header}>

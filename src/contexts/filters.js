@@ -23,7 +23,6 @@ const FiltersContextProvider = props => {
   }
 
   if (!fetched) {
-    console.log('running')
     database.ref(`users/${auth.uid}`).once('value').then(snapshot => {
       if (snapshot.hasChild('settings')) {
         updateFilters({ sort: snapshot.val().settings.defaultSort })

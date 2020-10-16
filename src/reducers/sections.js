@@ -1,7 +1,5 @@
 export const sectionsReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_SECTIONS':
-      return action.payload.sections
     case 'ADD_SECTION':
       return [...state, action.payload.section]
     case 'EDIT_SECTION':

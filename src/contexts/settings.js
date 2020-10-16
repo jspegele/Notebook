@@ -6,27 +6,7 @@ export const SettingsContext = createContext()
 
 const SettingsContextProvider = props => {
   const { auth } = useContext(AuthContext)
-  const [fetched, setFetched] = useState(false)
-  const [settings, setSettings] = useState({
-    theme: 'light',
-    sidebar: 'full',
-    defaultSidebar: 'full',
-    defaultSort: 'createdAsc'
-  })
-
-  if (!fetched) {
-    database.ref(`users/${auth.uid}`).once('value').then(snapshot => {
-      if (snapshot.hasChild('settings')) {
-        setSettings({
-          ...settings,
-          ...snapshot.val().settings
-        })
-      } else {
-        database.ref(`users/${auth.uid}/settings`).set(settings)
-      }
-    })
-    setFetched(true)
-  }
+  const [settings, setSettings] = useState(props.settings)
 
   const updateSettings = updates => {
     setSettings({

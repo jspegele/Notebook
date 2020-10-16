@@ -1,27 +1,6 @@
 import database from '../firebase/firebase'
 import { DateTime } from 'luxon'
 
-export const setPages = pages => ({
-  type: 'SET_PAGES',
-  payload: {
-    pages
-  }
-})
-
-export const startSetPages = (uid, callback) => {
-  const pages = []
-  database.ref(`users/${uid}/pages`).orderByChild('created').once('value').then(snapshot => {
-    snapshot.forEach(childSnapshot => {
-      pages.push({
-        id: childSnapshot.key,
-        ...childSnapshot.val()
-      })
-    })
-
-    callback(setPages(pages))
-  })
-}
-
 export const addPage = page => ({
   type: 'ADD_PAGE',
   payload: {

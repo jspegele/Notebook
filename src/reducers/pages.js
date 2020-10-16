@@ -1,7 +1,5 @@
 export const pagesReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_PAGES':
-      return action.payload.pages
     case 'ADD_PAGE':
       return [
         ...state,

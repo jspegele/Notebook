@@ -1,27 +1,6 @@
 import database from '../firebase/firebase'
 import { DateTime } from 'luxon'
 
-export const setSections = sections => ({
-  type: 'SET_SECTIONS',
-  payload: {
-    sections
-  }
-})
-
-export const startSetSections = (uid, callback) => {
-  const sections = []
-  database.ref(`users/${uid}/sections`).orderByChild('created').once('value').then(snapshot => {
-    snapshot.forEach(childSnapshot => {
-      sections.push({
-        id: childSnapshot.key,
-        ...childSnapshot.val()
-      })
-    })
-
-    callback(setSections(sections))
-  })
-}
-
 export const addSection = section => ({
   type: 'ADD_SECTION',
   payload: {

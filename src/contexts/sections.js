@@ -4,7 +4,7 @@ import { sectionsReducer } from '../reducers/sections'
 export const SectionsContext = createContext()
 
 const SectionsContextProvider = props => {
-  const [sections, dispatchSections] = useReducer(sectionsReducer, [])
+  const [sections, dispatchSections] = useReducer(sectionsReducer, props.sections)
   return (
     <SectionsContext.Provider value={{ sections, dispatchSections }}>
       {props.children}
