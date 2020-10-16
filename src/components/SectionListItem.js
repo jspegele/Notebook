@@ -1,53 +1,50 @@
 import React, { useEffect, useContext, useState, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import Popover from '@material-ui/core/Popover'
 import { FiMoreHorizontal, FiFolder, FiEdit2, FiX } from 'react-icons/fi'
 import { startEditSection, startRemoveSection } from '../actions/sections'
 import { AuthContext } from '../contexts/auth'
+import { SettingsContext } from '../contexts/settings'
 import { FiltersContext } from '../contexts/filters'
 import { SectionsContext } from '../contexts/sections'
 
 import styles from './style/ListItem.module.scss'
 import dropdownStyles from './style/Dropdown.module.scss'
 
+const initialState = {
+  mouseX: null,
+  mouseY: null,
+}
+
 const SectionListItem = ({ section }) => {
   const { auth } = useContext(AuthContext)
+  const { settings } = useContext(SettingsContext)
   const { sections, dispatchSections } = useContext(SectionsContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const [showDropdownBtn, setShowDropdownBtn] = useState(false)
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [dropdownPos, setDropdownPos] = React.useState(initialState)
   const [editableTitle, setEditableTitle] = useState(false)
   const [titleInput, setTitleInput] = useState(section.title || 'Untitled Category')
 
   const currentSectionId = filters.section || null
   const activeSection = currentSectionId === section.id ? true : false
-  const dropdownWrapperRef = useRef(null)
   const inputRef = useRef(null)
 
   const handleContextMenu = e => {
     e.preventDefault()
-    setShowDropdown(true)
+    setDropdownPos({
+      mouseX: e.clientX - 2,
+      mouseY: e.clientY - 4,
+    })
+  }
+  const handleCloseContextMenu = () => {
+    setDropdownPos(initialState)
+    setShowDropdownBtn(false)
   }
 
-  // Close dropdown if user clicks outside of it
-  useEffect(() => {
-    if (showDropdown) {
-      function handleClickOutside(event) {
-        if (dropdownWrapperRef.current && !dropdownWrapperRef.current.contains(event.target)) {
-          setShowDropdownBtn(false)
-          setShowDropdown(false)
-        }
-      }
-
-      document.addEventListener("mousedown", handleClickOutside)
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside)
-      }
-    }
-  }, [dropdownWrapperRef, showDropdown])
-
   const handleEditTitle = () => {
+    setDropdownPos(initialState)
     setShowDropdownBtn(false)
-    setShowDropdown(false)
     setEditableTitle(true)
   }
 
@@ -114,7 +111,7 @@ const SectionListItem = ({ section }) => {
         className={activeSection ? styles.activeItem : styles.item}
         onContextMenu={handleContextMenu}
         onMouseEnter={() => setShowDropdownBtn(true)}
-        onMouseLeave={() => !showDropdown && setShowDropdownBtn(false)}
+        onMouseLeave={() => dropdownPos.mouseY === null && setShowDropdownBtn(false)}
       >
         <div
           className={styles.titleContainer}
@@ -146,35 +143,39 @@ const SectionListItem = ({ section }) => {
         {showDropdownBtn && (
           <div
             className={styles.menu}
-            onClick={() => setShowDropdown(true)}
+            onClick={handleContextMenu}
           >
             <FiMoreHorizontal style={{ width: '1.6rem'}} />
           </div>
         )}
       </div>
-      {/* Dropdown */}
-      <div 
-        className={showDropdown ? (
-          `${dropdownStyles.content} ${dropdownStyles.showDropdown}`
-        ) : (
-          dropdownStyles.content
-        )}
-        style={{ marginLeft: '1rem' }}
-        ref={dropdownWrapperRef} 
+      {/* Context Menu */}
+      <Popover
+        open={dropdownPos.mouseY !== null}
+        onClose={handleCloseContextMenu}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          dropdownPos.mouseY !== null && dropdownPos.mouseX !== null
+            ? { top: dropdownPos.mouseY, left: dropdownPos.mouseX }
+            : undefined
+        }
+        style={{ background: 'none' }}
       >
-        <div
-          className={dropdownStyles.link}
-          onClick={handleEditTitle}
-        >
-          <FiEdit2 size="1.8rem" />Rename Category
+        <div className={`${settings.theme} ${dropdownStyles.content}`}>
+          <div
+            className={dropdownStyles.link}
+            onClick={handleEditTitle}
+          >
+            <FiEdit2 size="1.8rem" />Rename Category
+          </div>
+          <div
+            className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
+            onClick={handleDelete}
+          >
+            <FiX size="1.8rem" />Delete Permanently
+          </div>
         </div>
-        <div
-          className={`${dropdownStyles.link} ${dropdownStyles.destructive}`}
-          onClick={handleDelete}
-        >
-          <FiX size="1.8rem" />Delete Permanently
-        </div>
-      </div>
+      </Popover>
     </>
   )
 }

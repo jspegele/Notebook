@@ -55,3 +55,8 @@ img {
 .ReactModalPortal .ReactModal__Overlay--before-close {
   opacity: 0;
 }
+
+// Material UI Popover Reset
+.MuiPaper-root {
+  background-color: transparent !important;
+}

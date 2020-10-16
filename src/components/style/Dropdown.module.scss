@@ -1,12 +1,10 @@
 .content {
   background-color: var(--dropdown-bg);
   border: 1px solid var(--sidebar-borders);
-  box-shadow: 0 10px 15px rgba(0,0,0,.07), 0 5px 5px rgba(0,0,0,.2);
-  display: none;
+  box-shadow: 0 10px 15px var(--modal-shadow), 0 5px 5px var(--modal-shadow);
+  color: var(--text);
   min-width: 32rem;
   padding: .4rem 0;
-  position: absolute;
-  z-index: 1;
 }
 
 .link {
