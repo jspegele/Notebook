@@ -95,11 +95,14 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-top: 1.2rem;
+  margin-top: .2rem;
 
   select {
+    background: var(--dropdown-select);
+    border-color: var(--sidebar-borders);
+    color: var(--text);
     font-size: 1.4rem;
     outline: none;
-    padding: .2rem;
+    padding: .6rem;
   }
 }

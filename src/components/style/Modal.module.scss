@@ -4,11 +4,12 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.30);}
+  background-color: rgba(0, 0, 0, 0.40);}
 
 .modal {
-  background-color: #fff;
-  box-shadow: 0 0 10px 5px var(--surface);
+  background-color: var(--modal-bg);
+  box-shadow: 0 0 10px 5px var(--modal-shadow);
+  color: var(--text);
   max-height: 80vh;
   outline: none;
   overflow-y: auto;

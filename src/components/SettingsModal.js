@@ -13,13 +13,26 @@ import modalStyles from './style/Modal.module.scss'
 import buttonStyles from './style/Buttons.module.scss'
 import { FiltersContext } from '../contexts/filters'
 
-const PurpleSwitch = withStyles({
+const PurpleSwitchLight = withStyles({
   switchBase: {
     '&$checked': {
       color: '#6200ee',
     },
     '&$checked + $track': {
       backgroundColor: '#6200ee',
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch)
+
+const PurpleSwitchDark = withStyles({
+  switchBase: {
+    '&$checked': {
+      color: '#bb86fc',
+    },
+    '&$checked + $track': {
+      backgroundColor: '#bb86fc',
     },
   },
   checked: {},
@@ -110,7 +123,7 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
           <div className={styles.option}>
             <div className={styles.optionText}>Dark Mode</div>
             <div className={styles.optionValue}>
-              <PurpleSwitch
+              <PurpleSwitchDark
                 checked={darkMode === 'dark' ? true : false}
                 onChange={handleTheme}
                 color="secondary"
@@ -122,13 +135,23 @@ const SettingsModal = ({ modalOpen, handleCloseModal, user }) => {
           <div className={styles.option}>
             <div className={styles.optionText}>Collapsed Sidebar</div>
             <div className={styles.optionValue}>
-              <PurpleSwitch
-                checked={sidebar === 'full' ? false : true}
-                onChange={handleSidebar}
-                color="secondary"
-                name="darkMode"
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
+              {settings.theme === 'dark' ? (
+                <PurpleSwitchDark
+                  checked={sidebar === 'full' ? false : true}
+                  onChange={handleSidebar}
+                  color="secondary"
+                  name="darkMode"
+                  inputProps={{ 'aria-label': 'primary checkbox' }}
+                />
+              ) : (
+                <PurpleSwitchLight
+                  checked={sidebar === 'full' ? false : true}
+                  onChange={handleSidebar}
+                  color="secondary"
+                  name="darkMode"
+                  inputProps={{ 'aria-label': 'primary checkbox' }}
+                />
+              )}
             </div>
           </div>
           <div className={styles.option}>
