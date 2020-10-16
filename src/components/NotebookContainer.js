@@ -4,9 +4,9 @@ import Page from './Page'
 import Sidebar from './Sidebar'
 
 import '../styles/theme.scss'
-import styles from './style/Notebook.module.scss'
+import styles from './style/NotebookContainer.module.scss'
 
-const Notebook = () => {
+const NotebookContainer = () => {
   const { settings } = useContext(SettingsContext)
 
   return (
@@ -17,4 +17,4 @@ const Notebook = () => {
   )
 }
  
-export default Notebook
+export default NotebookContainer
