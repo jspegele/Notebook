@@ -22,7 +22,6 @@ function App() {
           // AUTHENTICATED
           if (!!auth.uid) {
             if (userData) {
-              console.log(userData)
               return (
                 <SettingsContextProvider settings={userData.settings}>
                   <SectionsContextProvider sections={userData.sections && userData.sections}>

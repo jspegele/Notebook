@@ -53,52 +53,90 @@ const PageListItem = ({ pageId }) => {
   }
 
   const handleSetSection = e => {
+    setDropdownPos(initialState)
     setShowDropdownBtn(false)
     setSectionSelect(e.target.value)
-
-    const pagesInSection = pages.filter(page => page.section === sectionId)
+    
+    // Set a new currentPage if this page is the currentPage for its current section
+    const pagesInSection = pages.filter(page => (page.section === sectionId && !page.trash))
     const currentSection = sections.find(section => section.id === sectionId)
-    if (filters.section === sectionId) {
-      if (pagesInSection.length === 1) {
-        updateFilters({ page: null })
-      } else if (currentSection.currentPage === pageId) {
-        const newCurrentPage = pagesInSection[0].id === pageId ? pagesInSection[1].id : pagesInSection[0].id
-        updateFilters({ page: newCurrentPage })
+    if (sectionId) {
+      if (currentSection.currentPage === pageId) {
+        if (pagesInSection.length === 1) {
+          startSetCurrentPage(auth.uid, sectionId, null, dispatchSections)
+          if (filters.section) {
+            updateFilters({ page: null })
+          }
+        } else {
+          const newCurrentPage = getNewNoteId()
+          startSetCurrentPage(auth.uid, sectionId, newCurrentPage, dispatchSections)
+          if (filters.section) {
+            updateFilters({ page: newCurrentPage })
+          }
+        }
       }
+    } else {
+      if (pageId === filters.page) handleSetPage(getNewNoteId())
     }
     
-    const newSection = sections.find(section => section.id === e.target.value)
-    if (!newSection.currentPage) startSetCurrentPage(auth.uid, newSection.id, pageId, dispatchSections)
-    startAssignSection(auth.uid, pageId, e.target.value, dispatchPages)
+    // Set this page as currentPage if new section does not have one
+    const newSectionId = e.target.value
+    const newSection = sections.find(section => section.id === newSectionId)
+    if (!newSection.currentPage) startSetCurrentPage(auth.uid, newSectionId, pageId, dispatchSections)
+
+    // Set new section for this page
+    startAssignSection(auth.uid, pageId, newSectionId, dispatchPages)
   }
 
   const handleRemoveSection = () => {
     setShowDropdownBtn(false)
-    const pagesInSection = pages.filter(page => page.section === sectionId)
+
+    // Set a new currentPage if this page is the currentPage for its current section 
+    const pagesInSection = pages.filter(page => (page.section === sectionId && !page.trash))
     const currentSection = sections.find(section => section.id === sectionId)
     if (pagesInSection.length === 1) {
       if (filters.section === sectionId) updateFilters({ page: null })
       startSetCurrentPage(auth.uid, sectionId, null, dispatchSections)
     } else if (currentSection.currentPage === pageId) {
-      const newCurrentPage = pagesInSection[0].id === pageId ? pagesInSection[1].id : pagesInSection[0].id
+      const newCurrentPage = getNewNoteId()
       if (filters.section === sectionId) updateFilters({ page: newCurrentPage })
       startSetCurrentPage(auth.uid, sectionId, newCurrentPage, dispatchSections)
     }
+
+    // Remove section from this page
     startRemoveSection(auth.uid, pageId, dispatchPages)
   }
 
   const handleFavorite = () => {
+    setDropdownPos(initialState)
     setShowDropdownBtn(false)
+
+    // Change page in focus if in favorites tab and this page is the current page
+    if (filters.tab === 'favorites' && filters.page === pageId) updateFilters({ page: getNewNoteId() })
+    
     startSetFavorite(auth.uid, pageId, !favorite, dispatchPages)
   }
 
   const handleTrash = () => {
     if (pageId === filters.page) handleSetPage(getNewNoteId())
+
+    // Set a sections currentPage to null if this page is its currentPage
+    const currentSection = sections.find(section => section.id === sectionId)
+    if (currentSection.currentPage === pageId) {
+      startSetCurrentPage(auth.uid, sectionId, null, dispatchSections)
+    }
+
     startSetTrash(auth.uid, pageId, dispatchPages)
   }
 
   const handleRestore = () => {
     if (pageId === filters.page) handleSetPage(getNewNoteId())
+
+    // Set this page as its sections currentPage if section does not have one already
+    if (thisPage.section && !pages.filter(page => (page.section === thisPage.section && !page.trash)).length) {
+      startSetCurrentPage(auth.uid, sectionId, pageId, dispatchSections)
+    }
+
     startRestoreTrash(auth.uid, pageId, dispatchPages)
   }
 

@@ -18,7 +18,11 @@ const Page = () => {
   const { filters, updateFilters } = useContext(FiltersContext)
   const visiblePages = getVisiblePages(pages, filters)
   const currentSectionId = filters.section || null
-  const currentPageId = filters.page || ((filters.tab === 'all' && pages.length) ? visiblePages[0].id : null)
+  const currentPageId = filters.page || (
+    (filters.tab === 'all' && pages.length) ? visiblePages[0].id : (
+      (filters.tab === 'categories' && visiblePages.length ? visiblePages[0].id : null)
+    )
+  )
   const currentPage = pages.filter(page => page.id === currentPageId)[0]
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
