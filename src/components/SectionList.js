@@ -7,6 +7,7 @@ import styles from './style/SectionList.module.scss'
 
 const SectionList = () => {
   const { sections } = useContext(SectionsContext)
+  console.log(sections)
   return (
     <div className={styles.sectionList}>
       <div className={styles.header}>Categories</div>

@@ -22,6 +22,7 @@ function App() {
           // AUTHENTICATED
           if (!!auth.uid) {
             if (userData) {
+              console.log(userData)
               return (
                 <SettingsContextProvider settings={userData.settings}>
                   <SectionsContextProvider sections={userData.sections && userData.sections}>
@@ -58,6 +59,7 @@ function App() {
                       })
                       setUserData({
                         settings,
+                        sections: [],
                         pages
                       })
                     })
@@ -89,9 +91,6 @@ function App() {
                   })
                 }
               })
-
-              // TO-DO: Add loading gif here. Remove loading gif from notebook?
-
               return (
                 <div className={styles.loader}>
                   <div className={styles.loadingImg}><img src={spinner} alt="loading..." /></div>
