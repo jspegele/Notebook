@@ -41,7 +41,11 @@ ul.menu {
     }
 
     &:hover {
-      background: #ededed;
+      background: var(--dropdown-hover);
     }
   }
+}
+
+.test {
+  color: red
 }

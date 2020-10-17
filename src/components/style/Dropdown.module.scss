@@ -3,8 +3,13 @@
   border: 1px solid var(--sidebar-borders);
   box-shadow: 0 10px 15px var(--modal-shadow), 0 5px 5px var(--modal-shadow);
   color: var(--text);
-  min-width: 32rem;
   padding: .4rem 0;
+}
+
+.contentSm {
+  @extend .content;
+  min-width: 0;
+  padding: .8rem 0;
 }
 
 .link {

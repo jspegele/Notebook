@@ -1,32 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu'
+import Popover from '@material-ui/core/Popover'
 import { FiArrowUp, FiArrowDown } from 'react-icons/fi'
+import { SettingsContext } from '../contexts/settings'
 import { FiltersContext } from '../contexts/filters'
 
 import styles from './style/PageListTools.module.scss'
-
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'center',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'center',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-));
+import dropdownStyles from './style/Dropdown.module.scss'
 
 const PageListTools = () => {
+  const { settings } = useContext(SettingsContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -71,27 +53,28 @@ const PageListTools = () => {
         )}
         
       </button>
-      <StyledMenu
-        id="customized-menu"
+      <Popover
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClosePopup}
       >
-        <span className={styles.title}>Sort Notes</span>
-        <ul className={styles.menu}>
-          {filters.sort === 'createdDesc' ? (
-            <li onClick={() => handleSort('createdAsc')}><FiArrowUp />Created</li>
-          ) : (
-            <li onClick={() => handleSort('createdDesc')}><FiArrowDown />Created</li>
-          )}
-          {filters.sort === 'titleAsc' ? (
-            <li onClick={() => handleSort('titleDesc')}><FiArrowDown />Title</li>
-          ) : (
-            <li onClick={() => handleSort('titleAsc')}><FiArrowUp />Title</li>
-          )}
-        </ul>
-      </StyledMenu>
+        <div className={`${settings.theme} ${dropdownStyles.contentSm}`}>
+          <span className={styles.title}>Sort Notes</span>
+          <ul className={styles.menu}>
+            {filters.sort === 'createdDesc' ? (
+              <li onClick={() => handleSort('createdAsc')}><FiArrowUp />Created</li>
+            ) : (
+              <li onClick={() => handleSort('createdDesc')}><FiArrowDown />Created</li>
+            )}
+            {filters.sort === 'titleAsc' ? (
+              <li onClick={() => handleSort('titleDesc')}><FiArrowDown />Title</li>
+            ) : (
+              <li onClick={() => handleSort('titleAsc')}><FiArrowUp />Title</li>
+            )}
+          </ul>
+        </div>
+      </Popover>
     </div>
   )
 }
