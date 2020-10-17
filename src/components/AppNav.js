@@ -9,6 +9,7 @@ const AppNav = () => {
   const { pages } = useContext(PagesContext)
   const { filters, updateFilters } = useContext(FiltersContext)
   const favorites = pages.filter(page => page.favorite)
+  const uncategorized = pages.filter(page => !page.section)
   const trash = pages.filter(page => page.trash)
   const currentSectionId = filters.section || null
   return (
@@ -48,7 +49,7 @@ const AppNav = () => {
         onClick={() => updateFilters({
           tab: 'uncategorized',
           section: null,
-          page: favorites.length ? favorites[0].id : null
+          page: uncategorized.length ? uncategorized[0].id : null
         })}
       >
         <div className={itemStyles.titleContainer}>
