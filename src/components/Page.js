@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, createRef } from 'react'
+import marked from 'marked'
 import { DateTime } from 'luxon'
 import { FiSave } from 'react-icons/fi'
 import { startSetCurrentPage } from '../actions/sections'
@@ -10,6 +11,7 @@ import { FiltersContext } from '../contexts/filters'
 import { getVisiblePages } from '../selectors/pages'
 
 import styles from './style/Page.module.scss'
+import buttonStyles from './style/Buttons.module.scss'
 
 const Page = () => {
   const { auth } = useContext(AuthContext)
@@ -24,6 +26,7 @@ const Page = () => {
     )
   )
   const currentPage = pages.filter(page => page.id === currentPageId)[0]
+  const [mode , setMode] = useState('editor')
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [pageAdded, setPageAdded] = useState(false)
@@ -62,27 +65,48 @@ const Page = () => {
     startEditPage(auth.uid, currentPage.id, { body: e.target.value }, dispatchPages)
   }
   return (
-    <section className={styles.notePage}>
+    <section className={mode === 'editor' ? styles.notePage : styles.notePagePreview}>
       {currentPage ? (
         <>
-          <div className={styles.title}>
-            <input
-              type="text"
-              placeholder="Untitled Note"
-              value={title}
-              onChange={updateTitle}
-              ref={titleInput}
-            />
-          </div>
-          <div className={styles.updated}>
-            <FiSave size="1.4rem" title="Page Saved to Cloud" />
-            Last Saved: {DateTime.fromISO(currentPage.updated).toFormat('cccc, d LLLL y    hh:mm a')}
-          </div>
-          <textarea
-            className={styles.notes}
-            value={body}
-            onChange={updateBody}
-          />
+          {mode === 'editor' ? (
+            <>
+              <div className={styles.title}>
+                <input
+                  type="text"
+                  placeholder="Untitled Note"
+                  value={title}
+                  onChange={updateTitle}
+                  ref={titleInput}
+                />
+                <button
+                  className={`${buttonStyles.button} ${styles.previewButton}`}
+                  onClick={() => setMode('preview')}
+                >
+                  Preview
+                </button>
+              </div>
+              <div className={styles.updated}>
+                <FiSave size="1.4rem" title="Page Saved to Cloud" />
+                Last Saved: {DateTime.fromISO(currentPage.updated).toFormat('cccc, d LLLL y    hh:mm a')}
+              </div>
+              <textarea
+                className={styles.editor}
+                value={body}
+                onChange={updateBody}
+              />
+            </>
+          ) : (
+            <div className={styles.preview}>
+              <button
+                className={`${buttonStyles.button} ${styles.previewButton}`}
+                onClick={() => setMode('editor')}
+              >
+                Editor
+              </button>
+              <h1 className={styles.previewTitle}>{title}</h1>
+              <div dangerouslySetInnerHTML={{__html: marked(body, {gfm: true, breaks: true})}}></div>
+            </div>
+          )}
         </>
       ) : (
         <div className={styles.getStarted}>

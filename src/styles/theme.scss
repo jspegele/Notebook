@@ -23,8 +23,11 @@
   --text-disabled: rgba(0, 0, 0, 0.38);
   --on-dark: rgba(255, 255, 255, 0.87);
   --on-dark-hover: #fff;
+  --on-error: rgba(255, 255, 255, 0.87);
+  --preview-headings: rgba(0, 0, 0, 0.87);
   
   --surface: #ffffff;
+  --preview-bg: #ffffff;
   --app-sidebar:#ebebeb;
   --page-sidebar: #e8e8e8;
   --sidebar-borders: #e0e0e0;
@@ -39,6 +42,8 @@
   --modal-shadow: #7a7a7a;
   --settings-hover: #ebebeb;
   --settings-photo: #e3e3e3;
+  --code-bg: #f2f2f2;
+  --block-code-border: #ebebeb;
   --login-bg: #f2f2f2;
   --login-header: #e0e0e0;
   --google: #4285f4;
@@ -78,9 +83,13 @@
   --text: rgba(255, 255, 255, 0.87);
   --text-secondary: rgba(255, 255, 255, 0.54);
   --text-disabled: rgba(255, 255, 255, 0.38);
+  --on-dark: rgba(255, 255, 255, 0.87);
+  --on-dark-hover: #fff;
   --on-error: rgba(0, 0, 0, 0.87);
+  --preview-headings: #f99837;
   
   --surface: #121212;
+  --preview-bg: #383838;
   --app-sidebar: #1e1e1e;
   --page-sidebar: #252525;
   --sidebar-borders: #1e1e1e;
@@ -95,6 +104,8 @@
   --modal-shadow: #121212;
   --settings-hover: #383838;
   --settings-photo: #383838;
+  --code-bg: #333333;
+  --block-code-border: #2c2c2c;
 
   
   // surface: #121212;

@@ -2,6 +2,7 @@
   background: var(--app-sidebar);
   border-right: 1px solid var(--sidebar-borders);
   display: flex;
+  flex-shrink: 0;
   font-size: 1.4rem;
   overflow: hidden;
   width: 50rem;

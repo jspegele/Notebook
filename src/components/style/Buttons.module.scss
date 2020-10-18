@@ -16,12 +16,6 @@
   &:hover:enabled {
     background: var(--primary-dark);
   }
-
-  &:active {
-    -webkit-box-shadow: inset 0px 0px 5px var(--surface);
-       -moz-box-shadow: inset 0px 0px 5px var(--surface);
-            box-shadow: inset 0px 0px 5px var(--surface);
-  }
 }
 
 .destructive {
