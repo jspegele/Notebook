@@ -22,7 +22,7 @@ const Login = () => {
       </div>
       <div className={styles.mainContent}>
         <div className={styles.container}>
-          <h2>A simple and fast app to keep your thoughts organized</h2>
+          <h2>A simple and fast markdown-based notes app</h2>
           <div className={styles.subtitle}>Notebook is a free and open-source notes app for the web. Get organized with all your notes in one place.</div>
           <div className={styles.signup}>
             <button className={styles.gButton} onClick={startLogin}>
